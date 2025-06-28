@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Учёт ТСД</title>
   <style>
     .cell {
-      width: 120px;
-      height: 100px;
-      margin: 10px;
-      font-size: 18px;
-      border: none;
-      background: green;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
+      width: 120px; height: 100px; margin: 10px;
+      font-size: 18px; border: none;
+      background: green; color: white; border-radius: 6px;
     }
     .busy {
       background: red !important;
+    }
+    #manual-section {
+      margin-top: 30px;
+    }
+    input {
+      padding: 8px;
+      font-size: 16px;
+    }
+    button.confirm {
+      padding: 8px 12px;
+      font-size: 16px;
+      margin-left: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -24,46 +31,62 @@
   <h2>Выберите ячейку</h2>
   <div id="cell-container"></div>
 
+  <div id="manual-section">
+    <h3>ввеcти бейдж вручную:</h3>
+    <input type="text" id="manual-badge" placeholder="ID бейджа" />
+    <button class="confirm" onclick="sendManualBadge()">Подтвердить</button>
+  </div>
+
   <script>
     const cellContainer = document.getElementById("cell-container");
     const totalCells = 10;
+    let currentCell = null;
 
     for (let i = 1; i <= totalCells; i++) {
       const btn = document.createElement("button");
-      btn.innerText = `Ячейка ${i}`;
+      btn.innerText = `ячейка ${i}`;
       btn.className = "cell";
-      btn.onclick = async () => {
-        await fetch('/select-cell', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cell: i })
-        });
-        alert("Приложите бейдж");
+      btn.onclick = () => {
+        currentCell = i;
+        alert("Приложите бейдж или введите вручную");
       };
-      btn.id = `cell-${i}`;
+      btn.id = cell-${i};
       cellContainer.appendChild(btn);
     }
 
-  setInterval(async () => {
-    try {
-      const res = await fetch('/status');
-      const status = await res.json();
-
-      for (let i = 1; i <= totalCells; i++) {
-        const btnId = `cell-${i}`;
-        const btn = document.getElementById(btnId);
-
-        if (btn && status[i] && status[i].busy) {
-          btn.classList.add("busy");
-        } else if (btn) {
-          btn.classList.remove("busy");
-        }
+    async function sendManualBadge() {
+      const badge = document.getElementById("manual-badge").value.trim();
+      if (!currentCell || !badge) {
+        alert("Сначала выберите ячейку и введите бейдж");
+        return;
       }
-    } catch (err) {
-      console.error("Ошибка при обновлении статуса ячеек:", err);
+
+      await fetch('/scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ badge, cell: currentCell })
+      });
+
+      alert("Бейдж вручную отправлен");
+      document.getElementById("manual-badge").value = "";
     }
-  }, 1000);
-</script>
+
+    setInterval(async () => {
+      try {
+        const res = await fetch('/status');
+        const status = await res.json();
+        for (let i = 1; i <= totalCells; i++) {
+          const btn = `document.getElementById(cell-${i})`;
+          if (status[i]?.busy) {
+            btn.classList.add("busy");
+          } else {
+            btn.classList.remove("busy");
+          }
+        }
+      } catch (e) {
+        console.error("Ошибка при обновлении статуса ячеек:", e);
+      }
+    }, 1000);
   </script>
 </body>
 </html>

@@ -35,5 +35,18 @@ app.get('/status', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Сервер работает на http://localhost:${port}`);
+  console.log(`Сервер работает на http://localhost:${port})`;
+});app.post('/scan', (req, res) => {
+  const { badge, cell } = req.body;
+  if (!badge || !cell) return res.sendStatus(400);
+
+  const isBusy = cellStatus[cell]?.busy || false;
+  cellStatus[cell] = {
+    busy: !isBusy,
+    badge,
+    timestamp: new Date().toISOString()
+  };
+
+  console.log(`(Ручной ввод) Ячейка ${cell}: ${isBusy ? 'возврат' : 'выдача'} ТСД сотруднику ${badge})`;
+  res.sendStatus(200);
 });
