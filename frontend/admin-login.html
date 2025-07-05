@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Вход в админку</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input {
+      font-size: 16px;
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      font-size: 16px;
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h2>Вход в админку</h2>
+  <input type="number" id="badge" placeholder="Введите бейдж администратора" />
+  <button onclick="login()">Войти</button>
+
+  <script>
+    function login() {
+      const badge = document.getElementById("badge").value.trim();
+      if (!badge) {
+        alert("Введите бейдж");
+        return;
+      }
+
+      fetch('/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ badge })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          location.href = '/admin';
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch(err => alert("Ошибка подключения"));
+    }
+  </script>
+</body>
+</html>
