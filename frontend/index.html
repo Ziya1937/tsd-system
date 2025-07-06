@@ -94,11 +94,10 @@
           if (res.ok) {
             selectedCell = i;
             openModal();
-            alert`(🟢 Ячейка ${i} выбрана, введите бейдж)`;
-          } else if (res.status === 409) {
-            selectedCell = i;
-            openModal();
-            alert`(🔴 Ячейка ${i} занята. Введите бейдж для возврата ТСД)`;
+			} else if (res.status === 409) {
+          selectedCell = i;
+          openModal();
+          alert`(🔴 Ячейка ${i} занята. Введите бейдж для возврата ТСД)`;
 			} else if (res.status === 423) {
           alert`(🟠 Ячейка ${i} в ремонте. Взять нельзя.)`;
           selectedCell = null;

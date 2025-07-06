@@ -8,6 +8,9 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
+const serialsPath = path.join(__dirname, 'serials.json');
+let serials = fs.existsSync(serialsPath) ? JSON.parse(fs.readFileSync(serialsPath, 'utf-8')) : {};
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -56,6 +59,11 @@ function checkAdminAuth(req, res, next) {
   if (badge && adminBadges.has(badge)) next();
   else res.redirect('/admin/login');
 }
+
+// Отдать страницу истории (в админ зоне)
+app.get('/admin/history-page', checkAdminAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'history.html'));
+});
 
 app.use(express.static(path.join(__dirname, 'frontend')));
 
@@ -176,6 +184,34 @@ app.post('/admin/repair-release', checkAdminAuth, (req, res) => {
   res.sendStatus(200);
 });
 
+// Привязка серийного номера к ячейке
+app.post('/admin/bind-serial', checkAdminAuth, (req, res) => {
+  const { cell, serial } = req.body;
+  if (!cell || !serial) return res.status(400).send('Неверные данные');
+
+  serials[cell] = serial;
+  fs.writeFileSync(serialsPath, JSON.stringify(serials, null, 2));
+  res.sendStatus(200);
+});
+
+// Получить серийник по ячейке
+app.get('/admin/serial-by-cell', checkAdminAuth, (req, res) => {
+  const { cell } = req.query;
+  res.json({ serial: serials[cell] || null });
+});
+
+// Получить ячейку по серийнику
+app.get('/admin/cell-by-serial', checkAdminAuth, (req, res) => {
+  const { serial } = req.query;
+  const entry = Object.entries(serials).find(([_, s]) => s === serial);
+  res.json({ cell: entry ? entry[0] : null });
+});
+
+// Отдать страницу управления серийными номерами
+app.get('/admin/serials', checkAdminAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'serials.html'));
+});
+
 app.listen(port, () => {
-  console.log`(Сервер работает на http://localhost:${port})`;
+  console.log(`Сервер работает на http://localhost:${port}`);
 });

@@ -5,11 +5,49 @@
       "action": "repaired",
       "badge": "528987",
       "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T00:56:24.019Z",
+      "action": "repaired",
+      "badge": "528987",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T01:01:28.346Z",
+      "action": "released",
+      "badge": "528987",
+      "admin": true
     }
   ],
-  "2": [],
+  "2": [
+    {
+      "timestamp": "2025-07-06T00:56:26.879Z",
+      "action": "occupied",
+      "badge": "3",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T01:01:28.024Z",
+      "action": "released",
+      "badge": "528987",
+      "admin": true
+    }
+  ],
   "3": [],
-  "4": [],
+  "4": [
+    {
+      "timestamp": "2025-07-06T00:56:30.793Z",
+      "action": "repaired",
+      "badge": "528987",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T01:01:27.522Z",
+      "action": "released",
+      "badge": "528987",
+      "admin": true
+    }
+  ],
   "5": [],
   "6": [],
   "7": [],
@@ -20,8 +58,94 @@
   "12": [],
   "13": [],
   "14": [],
-  "15": [],
-  "16": [],
+  "15": [
+    {
+      "timestamp": "2025-07-06T01:07:13.717Z",
+      "action": "occupied",
+      "badge": "15",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T01:09:58.107Z",
+      "action": "released",
+      "badge": "15",
+      "admin": false
+    }
+  ],
+  "16": [
+    {
+      "timestamp": "2025-07-06T00:56:39.357Z",
+      "action": "occupied",
+      "badge": "16",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T00:59:53.271Z",
+      "action": "released",
+      "badge": "528987",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T00:59:56.491Z",
+      "action": "occupied",
+      "badge": "17",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T01:00:03.214Z",
+      "action": "released",
+      "badge": "17",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T01:00:09.555Z",
+      "action": "occupied",
+      "badge": "18",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T01:00:16.958Z",
+      "action": "released",
+      "badge": "18",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T01:00:24.462Z",
+      "action": "repaired",
+      "badge": "528987",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T01:01:25.953Z",
+      "action": "released",
+      "badge": "528987",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T01:06:54.839Z",
+      "action": "occupied",
+      "badge": "16",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T01:09:52.537Z",
+      "action": "released",
+      "badge": "16",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T01:10:14.520Z",
+      "action": "occupied",
+      "badge": "528987",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T01:11:01.933Z",
+      "action": "released",
+      "badge": "528987",
+      "admin": true
+    }
+  ],
   "17": [],
   "18": [],
   "19": [],

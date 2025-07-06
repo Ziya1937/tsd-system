@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>История ячеек</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    label, input {
+      font-size: 18px;
+    }
+    input {
+      width: 100px;
+      padding: 5px;
+      margin-left: 10px;
+      margin-bottom: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #eee;
+    }
+    caption {
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+  </style>
+</head>
+<body>
+  <h2>История ячейки</h2>
+  <label for="cellInput">Номер ячейки:</label>
+  <input type="number" id="cellInput" min="1" />
+  <button onclick="loadHistory()">Показать историю</button>
+
+  <table id="historyTable" style="display:none;">
+    <caption>История выбранной ячейки</caption>
+    <thead>
+      <tr>
+        <th>Взял (occupied)</th>
+        <th>Вернул (released)</th>
+        <th>Отправил на ремонт (repaired)</th>
+      </tr>
+    </thead>
+    <tbody id="historyBody">
+    </tbody>
+  </table>
+
+  <script>
+    async function loadHistory() {
+      const cell = document.getElementById('cellInput').value.trim();
+      if (!cell) {
+        alert('Введите номер ячейки');
+        return;
+      }
+
+      try {
+        const res = await fetch('/admin/history');
+        if (!res.ok) throw new Error('Ошибка загрузки истории');
+        const history = await res.json();
+
+        if (!history[cell] || history[cell].length === 0) {
+          alert('История для этой ячейки отсутствует');
+          document.getElementById('historyTable').style.display = 'none';
+          return;
+        }
+
+        // Разбиваем события на колонки по типу action
+        const occupiedEvents = [];
+        const releasedEvents = [];
+        const repairedEvents = [];
+
+        history[cell].forEach(event => {
+          const time = new Date(event.timestamp).toLocaleString();
+          const badge = event.badge || '-';
+          const info = `${time} | ${badge}`;
+          if (event.action === 'occupied') occupiedEvents.push(info);
+          else if (event.action === 'released') releasedEvents.push(info);
+          else if (event.action === 'repaired') repairedEvents.push(info);
+        });
+
+        // Узнаем максимальное количество строк
+        const maxRows = Math.max(occupiedEvents.length, releasedEvents.length, repairedEvents.length);
+
+        const tbody = document.getElementById('historyBody');
+        tbody.innerHTML = '';
+
+        for (let i = 0; i < maxRows; i++) {
+          const row = document.createElement('tr');
+
+          const tdOccupied = document.createElement('td');
+          tdOccupied.textContent = occupiedEvents[i] || '';
+          row.appendChild(tdOccupied);
+
+          const tdReleased = document.createElement('td');
+          tdReleased.textContent = releasedEvents[i] || '';
+          row.appendChild(tdReleased);
+
+          const tdRepaired = document.createElement('td');
+          tdRepaired.textContent = repairedEvents[i] || '';
+          row.appendChild(tdRepaired);
+
+          tbody.appendChild(row);
+        }
+
+        document.getElementById('historyTable').style.display = 'table';
+      } catch (e) {
+        alert('Ошибка при загрузке истории: ' + e.message);
+      }
+    }
+  </script>
+</body>
+</html>

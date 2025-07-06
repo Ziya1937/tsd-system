@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Привязка серийных номеров</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    label { display: block; margin-top: 15px; }
+    input { width: 100%; padding: 6px; margin-top: 5px; }
+    button { margin-top: 15px; padding: 10px; width: 100%; }
+    .result { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Привязка серийных номеров к ячейкам</h2>
+
+  <label>Привязать:
+    <input type="number" id="cellInput" placeholder="Номер ячейки" />
+    <input type="text" id="serialInput" placeholder="Серийный номер ТСД" />
+    <button onclick="bindSerial()">Привязать</button>
+  </label>
+
+  <label>Поиск по ячейке:
+    <input type="number" id="searchCell" placeholder="Номер ячейки" />
+    <button onclick="searchByCell()">Найти</button>
+  </label>
+
+  <label>Поиск по серийному номеру:
+    <input type="text" id="searchSerial" placeholder="Серийный номер" />
+    <button onclick="searchBySerial()">Найти</button>
+  </label>
+
+  <div id="result" class="result"></div>
+
+  <script>
+    async function bindSerial() {
+      const cell = document.getElementById("cellInput").value.trim();
+      const serial = document.getElementById("serialInput").value.trim();
+      if (!cell || !serial) return alert("Заполните оба поля");
+
+      const res = await fetch("/admin/bind-serial", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cell, serial })
+      });
+
+      if (res.ok) {
+        alert("Привязка успешно сохранена");
+      } else {
+        alert("Ошибка при привязке");
+      }
+    }
+
+    async function searchByCell() {
+      const cell = document.getElementById("searchCell").value.trim();
+      if (!cell) return;
+
+      const res = await fetch(`/admin/serial-by-cell?cell=${cell}`);
+      const data = await res.json();
+      document.getElementById("result").innerText =
+        data.serial ? `Серийный номер: ${data.serial}` : "Серийный номер не найден";
+    }
+
+    async function searchBySerial() {
+      const serial = document.getElementById("searchSerial").value.trim();
+      if (!serial) return;
+
+      const res = await fetch(`/admin/cell-by-serial?serial=${serial}`);
+      const data = await res.json();
+      document.getElementById("result").innerText =
+        data.cell ? `Номер ячейки: ${data.cell}` : "Ячейка не найдена";
+    }
+  </script>
+</body>
+</html>
