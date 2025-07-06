@@ -41,7 +41,7 @@
       for (let i = 1; i <= 100; i++) {
         const s = status[i];
         const row = document.createElement("tr");
-        row.className = s.inRepair ? "repair" : (s.busy ? "busy" : "");
+      row.className = (s && s.inRepair) ? "repair" : ((s && s.busy) ? "busy" : "");
 
         row.innerHTML = `
           <td>${i}</td>
