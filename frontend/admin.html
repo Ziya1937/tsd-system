@@ -38,7 +38,7 @@
       const tbody = document.querySelector("#cells-table tbody");
       tbody.innerHTML = "";
 
-      for (let i = 1; i <= 150; i++) {
+      for (let i = 1; i <= 100; i++) {
         const s = status[i];
         const row = document.createElement("tr");
         row.className = s.inRepair ? "repair" : (s.busy ? "busy" : "");

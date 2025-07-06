@@ -18,6 +18,9 @@
     .busy {
       background: red !important;
     }
+	.repair {
+  background-color: orange !important;
+    }
     #cell-container {
       display: flex;
       flex-wrap: wrap;
@@ -96,10 +99,13 @@
             selectedCell = i;
             openModal();
             alert`(🔴 Ячейка ${i} занята. Введите бейдж для возврата ТСД)`;
-          } else {
-            alert("Ошибка при выборе ячейки");
-            selectedCell = null;
-          }
+			} else if (res.status === 423) {
+          alert`(🟠 Ячейка ${i} в ремонте. Взять нельзя.)`;
+          selectedCell = null;
+        } else {
+          alert("Ошибка при выборе ячейки");
+          selectedCell = null;
+        }
         } catch (e) {
           alert("Ошибка подключения к серверу");
           selectedCell = null;
@@ -165,24 +171,28 @@
 
     // Обновление статуса каждые 1 сек
     setInterval(async () => {
-      try {
-        const res = await fetch('/status');
-        const status = await res.json();
+  try {
+    const res = await fetch('/status');
+    const status = await res.json();
 
-        for (let i = 1; i <= totalCells; i++) {
-          const btn = document.getElementById(`cell-${i}`);
-          if (!btn) continue;
+    for (let i = 1; i <= totalCells; i++) {
+      const btn = document.getElementById(`cell-${i}`);
+      if (!btn) continue;
 
-          if (status[i]?.busy) {
-            btn.classList.add("busy");
-          } else {
-            btn.classList.remove("busy");
-          }
-        }
-      } catch (e) {
-        console.error("Ошибка при обновлении статуса:", e);
+      if (status[i]?.inRepair) {
+        btn.classList.add("repair");
+        btn.classList.remove("busy");
+      } else if (status[i]?.busy) {
+        btn.classList.add("busy");
+        btn.classList.remove("repair");
+      } else {
+        btn.classList.remove("busy", "repair");
       }
-    }, 1000);
+    }
+  } catch (e) {
+    console.error("Ошибка при обновлении статуса:", e);
+  }
+}, 1000);
   </script>
 </body>
 </html>

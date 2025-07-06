@@ -95,7 +95,7 @@ app.get('/admin/history', checkAdminAuth, (req, res) => {
 app.post('/select-cell', (req, res) => {
   const { cell } = req.body;
   if (!cellStatus[cell]) return res.status(400).send('Ячейка не найдена');
-  if (cellStatus[cell].inRepair) return res.status(409).send('Ячейка в ремонте');
+  if (cellStatus[cell].inRepair) return res.status(423).send('Ячейка в ремонте');
 
   if (cellStatus[cell].busy) {
     return res.status(409).send('Занята');
