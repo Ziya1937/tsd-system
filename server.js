@@ -227,6 +227,10 @@ app.get('/admin/cell-by-serial', checkAdminAuth, (req, res) => {
   res.json({ cell: entry ? entry[0] : null });
 });
 
+app.get('/employee', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'employee.html'));
+});
+
 app.listen(port, () => {
   console.log(`Сервер работает на http://localhost:${port}`);
 });

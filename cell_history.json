@@ -423,6 +423,18 @@
       "action": "released",
       "badge": "-",
       "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:22:53.013Z",
+      "action": "occupied",
+      "badge": "16",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:23:09.413Z",
+      "action": "released",
+      "badge": "16",
+      "admin": false
     }
   ],
   "17": [],
@@ -435,7 +447,20 @@
   "24": [],
   "25": [],
   "26": [],
-  "27": [],
+  "27": [
+    {
+      "timestamp": "2025-07-06T09:22:57.080Z",
+      "action": "occupied",
+      "badge": "27",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:23:05.437Z",
+      "action": "released",
+      "badge": "27",
+      "admin": false
+    }
+  ],
   "28": [],
   "29": [],
   "30": [],

@@ -1,197 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Ячейки ТСД</title>
+  <title>ТСД Система</title>
   <style>
-    .cell {
-      width: 100px;
-      height: 80px;
-      margin: 5px;
-      font-size: 14px;
-      border: none;
-      background: green;
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f2fa;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background-color: #9c27b0;
       color: white;
-      border-radius: 6px;
+      padding: 20px 0;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 40px 20px;
+    }
+
+    .button {
+      display: inline-block;
+      margin: 20px;
+      padding: 20px 40px;
+      font-size: 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ba68c8;
+      color: white;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      font-weight: bold;
     }
-    .busy {
-      background: red !important;
+
+    .button:hover {
+      background-color: #ab47bc;
     }
-	.repair {
-  background-color: orange !important;
+
+    footer {
+      margin-top: 60px;
+      font-size: 14px;
+      color: #888;
     }
-    #cell-container {
-      display: flex;
-      flex-wrap: wrap;
-      max-width: 1200px;
-    }
-    #modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    #modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 300px;
-      box-sizing: border-box;
-    }
-    #modal-content input {
-      width: 100%;
-      font-size: 16px;
-      padding: 5px;
-      box-sizing: border-box;
-    }
-    #modal-content button {
-      margin-top: 10px;
-      padding: 6px 12px;
-      font-size: 16px;
-      cursor: pointer;
+
+    @media (max-width: 600px) {
+      .button {
+        width: 80%;
+        font-size: 18px;
+        padding: 15px;
+      }
     }
   </style>
 </head>
 <body>
-  <h2>Выберите ячейку</h2>
-  <div id="cell-container"></div>
+  <header>Система учёта ТСД</header>
 
-  <!-- Модальное окно -->
-  <div id="modal">
-    <div id="modal-content">
-      <h3>Введите бейдж</h3>
-      <input type="number" id="modal-badge" autocomplete="off" />
-      <div style="text-align: right;">
-        <button onclick="submitBadge()">OK</button>
-      </div>
-    </div>
-  </div>
+  <main>
+    <a href="/employee.html" class="button">Вход для сотрудников</a>
+    <a href="/admin/login" class="button">Админ-панель</a>
+  </main>
 
-  <script>
-    const cellContainer = document.getElementById("cell-container");
-    const totalCells = 100;
-    let selectedCell = null;
-
-    // Создание ячеек
-    for (let i = 1; i <= totalCells; i++) {
-      const btn = document.createElement("button");
-      btn.innerText = `Ячейка ${i}`;
-      btn.className = "cell";
-      btn.id = `cell-${i}`;
-
-      btn.onclick = async () => {
-        try {
-          const res = await fetch('/select-cell', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ cell: i })
-          });
-
-          if (res.ok) {
-            selectedCell = i;
-            openModal();
-			} else if (res.status === 409) {
-          selectedCell = i;
-          openModal();
-          alert`(🔴 Ячейка ${i} занята. Введите бейдж для возврата ТСД)`;
-			} else if (res.status === 423) {
-          alert`(🟠 Ячейка ${i} в ремонте. Взять нельзя.)`;
-          selectedCell = null;
-        } else {
-          alert("Ошибка при выборе ячейки");
-          selectedCell = null;
-        }
-        } catch (e) {
-          alert("Ошибка подключения к серверу");
-          selectedCell = null;
-        }
-      };
-
-      cellContainer.appendChild(btn);
-    }
-
-    // Открыть модальное окно
-    function openModal() {
-      const modal = document.getElementById("modal");
-      modal.style.display = "flex";
-      const input = document.getElementById("modal-badge");
-      input.value = "";
-      input.focus();
-    }
-
-    // Закрыть модальное окно
-    function closeModal() {
-      const modal = document.getElementById("modal");
-      modal.style.display = "none";
-      selectedCell = null;
-    }
-
-    // Обработка Enter
-    document.getElementById("modal-badge").addEventListener("keydown", e => {
-      if (e.key === "Enter") submitBadge();
-    });
-
-    // Отправка бейджа
-    async function submitBadge() {
-      const badge = document.getElementById("modal-badge").value.trim();
-      if (!badge || !selectedCell) {
-        alert("Введите бейдж и выберите ячейку");
-        return;
-      }
-
-      try {
-        const res = await fetch('/manual-badge', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ badge, cell: selectedCell })
-        });
-
-        if (res.ok) {
-          alert(`✅ Бейдж ${badge} обработан`);
-          closeModal();
-        } else if (res.status === 403) {
-          alert("⛔️ Эта ячейка занята другим сотрудником");
-        } else if (res.status === 409) {
-          const data = await res.json();
-          alert(`⛔️ У вас уже есть ТСД в ячейке №${data.conflictCell}. Сначала верните его.`);
-        } else {
-          alert("⚠️ Неизвестная ошибка");
-        }
-      } catch (err) {
-        alert("Ошибка подключения к серверу");
-      }
-
-      document.getElementById("modal-badge").value = "";
-    }
-
-    // Обновление статуса каждые 1 сек
-    setInterval(async () => {
-  try {
-    const res = await fetch('/status');
-    const status = await res.json();
-
-    for (let i = 1; i <= totalCells; i++) {
-      const btn = document.getElementById(`cell-${i}`);
-      if (!btn) continue;
-
-      if (status[i]?.inRepair) {
-        btn.classList.add("repair");
-        btn.classList.remove("busy");
-      } else if (status[i]?.busy) {
-        btn.classList.add("busy");
-        btn.classList.remove("repair");
-      } else {
-        btn.classList.remove("busy", "repair");
-      }
-    }
-  } catch (e) {
-    console.error("Ошибка при обновлении статуса:", e);
-  }
-}, 1000);
-  </script>
+  <footer>© 2025 TSD System</footer>
 </body>
 </html>
