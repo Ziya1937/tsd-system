@@ -1,130 +1,187 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Админ панель</title>
+  <title>Управление ячейками</title>
   <style>
-    body { font-family: Arial; padding: 20px; background: #f4f4f4; }
-    h1 { margin-bottom: 20px; }
-    table { border-collapse: collapse; width: 100%; margin-bottom: 40px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-    .busy { background: #ffdddd; }
-    .repair { background: #fff2cc; }
-    button { padding: 6px 12px; margin: 2px; }
-    pre { background: #eee; padding: 10px; max-height: 400px; overflow: auto; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3f0f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #a100ff;
+      margin-bottom: 20px;
+    }
+
+    .nav {
+      margin-bottom: 20px;
+    }
+
+    .nav button {
+      background: #a100ff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-right: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .nav button:hover {
+      background: #8b00d1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #faf5ff;
+      color: #5e007d;
+    }
+
+    .busy {
+      background-color: #ffcccc;
+    }
+
+    .repair {
+      background-color: #ffd699;
+    }
+
+    .broken {
+      background-color: #ffff99;
+    }
+
+    .actions button {
+      margin: 2px;
+      padding: 5px 10px;
+      background: #e0e0e0;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .actions button:hover {
+      background: #ccc;
+    }
   </style>
 </head>
 <body>
-  <h1>Админ-панель</h1>
+  <h1>Управление ячейками</h1>
 
-<button onclick="location.href='/admin/serials'">Серийные номера</button>
+  <div class="nav">
+    <button onclick="location.href='/admin/serials'">Серийные номера</button>
+    <button onclick="location.href='/admin/history-page'">История ячеек</button>
+  </div>
 
-<button onclick="location.href='/admin/history-page'">История ячеек</button>
-
-  <h3>Статус ячеек</h3>
-  <table id="cells-table">
+  <table>
     <thead>
       <tr>
-        <th>№</th><th>Статус</th><th>Бейдж</th><th>Время</th><th>Действия</th>
+        <th>№</th>
+        <th>Статус</th>
+        <th>ID</th>
+        <th>Время</th>
+        <th>Действия</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody id="cells-body"></tbody>
   </table>
-
-  <h3>История ячеек</h3>
-  <pre id="history">Загрузка...</pre>
 
   <script>
     async function loadStatus() {
       const res = await fetch('/status');
       const status = await res.json();
-
-      const tbody = document.querySelector("#cells-table tbody");
+      const tbody = document.getElementById("cells-body");
       tbody.innerHTML = "";
 
       for (let i = 1; i <= 100; i++) {
         const s = status[i];
         const row = document.createElement("tr");
-      row.className = (s && s.inRepair) ? "repair" : ((s && s.busy) ? "busy" : "");
+
+        if (s.inRepair) {
+          row.className = s.repairType === 'broken' ? "broken" : "repair";
+        } else if (s.busy) {
+          row.className = "busy";
+        }
 
         row.innerHTML = `
           <td>${i}</td>
-          <td>${s.inRepair ? "🔧 В ремонте" : s.busy ? "🔴 Занята" : "🟢 Свободна"}</td>
+          <td>${
+            s.inRepair 
+              ? (s.repairType === 'broken' ? "⚠️ Сломан" : "🔧 На ремонте")
+              : s.busy 
+                ? "🔴 Занята" 
+                : "🟢 Свободна"
+          }</td>
           <td>${s.badge || ""}</td>
           <td>${s.time ? new Date(s.time).toLocaleString() : ""}</td>
-          <td>
-            <button onclick="release(${i})">Освободить</button>
+          <td class="actions">
+            <button onclick="release(${i})">Вернуть</button>
             <button onclick="occupy(${i})">Занять</button>
             <button onclick="repair(${i})">Ремонт</button>
-            <button onclick="repairRelease(${i})">Вернуть</button>
+            <button onclick="markBroken(${i})">Сломан</button>
           </td>
         `;
         tbody.appendChild(row);
       }
     }
 
-    async function loadHistory() {
-      const res = await fetch('/admin/history');
-      const history = await res.json();
-      const lines = [];
-
-      Object.entries(history).forEach(([cell, events]) => {
-        if (events.length === 0) return;
-        lines.push(`\n🗂 Ячейка ${cell}`);
-        events.forEach(e => {
-          lines.push`(- ${e.timestamp} | ${e.action} | ${e.badge} ${e.admin ? "(admin)" : ""})`;
-        });
-      });
-
-      document.getElementById("history").innerText = lines.join("\n");
-    }
-
     async function release(cell) {
-      await fetch('/admin/release-cell', {
+      await fetch('/admin/repair-release', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cell })
       });
-      loadStatus(); loadHistory();
+      loadStatus();
     }
 
     async function occupy(cell) {
-      const badge = prompt("Введите бейдж сотрудника:");
+      const badge = prompt("Введите ID сотрудника:");
       if (!badge) return;
       await fetch('/admin/occupy', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cell, badge })
       });
-      loadStatus(); loadHistory();
+      loadStatus();
     }
 
     async function repair(cell) {
-      const adminBadge = prompt("Подтвердите бейдж администратора:");
-      if (!adminBadge) return;
+      const badge = prompt("Введите свой ID (администратор):");
+      if (!badge) return;
       await fetch('/admin/repair', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cell, badge: adminBadge })
+        body: JSON.stringify({ cell, badge })
       });
-      loadStatus(); loadHistory();
+      loadStatus();
     }
 
-    async function repairRelease(cell) {
-      await fetch('/admin/repair-release', {
+    async function markBroken(cell) {
+      const badge = prompt("Введите свой ID (администратор):");
+      if (!badge) return;
+      await fetch('/admin/mark-broken', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cell })
+        body: JSON.stringify({ cell, badge })
       });
-      loadStatus(); loadHistory();
+      loadStatus();
     }
 
     loadStatus();
-    loadHistory();
-    setInterval(() => {
-      loadStatus();
-      loadHistory();
-    }, 5000);
+    setInterval(loadStatus, 5000);
   </script>
 </body>
 </html>
