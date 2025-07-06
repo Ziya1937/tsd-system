@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-const adminBadges = new Set(['12345', '528987', 'admin1']);
+const adminBadges = new Set(['972633', '961424', '528987', '335821']);
 const totalCells = 100;
 
 const historyPath = path.join(__dirname, 'cell_history.json');
