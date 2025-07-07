@@ -1,145 +1,184 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Ячейки ТСД</title>
+  <title>Выбор ячейки</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    .cell {
-      width: 100px;
-      height: 80px;
-      margin: 5px;
-      font-size: 14px;
-      border: none;
-      background: green;
+    :root {
+      --main-bg: linear-gradient(135deg, #a64bf4, #e54ee9);
+      --btn-bg: #ffffff;
+      --btn-text: #a64bf4;
+      --busy-color: #ff4b4b;
+      --repair-color: orange;
+      --broken-color: yellow;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: "Segoe UI", sans-serif;
+      background: var(--main-bg);
       color: white;
-      border-radius: 6px;
-      cursor: pointer;
+      min-height: 100vh;
     }
-    .busy {
-      background: red !important;
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
     }
-	.repair {
-  background-color: orange !important;
-    }
+
     #cell-container {
-      display: flex;
-      flex-wrap: wrap;
-      max-width: 1200px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 10px;
+      max-width: 900px;
+      margin: auto;
     }
+
+    .cell {
+      padding: 15px 0;
+      border-radius: 8px;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .cell:hover {
+      opacity: 0.85;
+    }
+
+    .busy { background-color: var(--busy-color) !important; color: white !important; }
+    .repair { background-color: var(--repair-color) !important; color: white !important; }
+    .broken { background-color: var(--broken-color) !important; color: black !important; }
+
     #modal {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.7);
       justify-content: center;
       align-items: center;
       z-index: 1000;
     }
+
     #modal-content {
       background: white;
       padding: 20px;
-      border-radius: 10px;
-      width: 300px;
-      box-sizing: border-box;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 320px;
+      text-align: center;
+      color: black;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      animation: fadeIn 0.3s ease-in-out;
     }
+
     #modal-content input {
       width: 100%;
+      padding: 10px;
       font-size: 16px;
-      padding: 5px;
-      box-sizing: border-box;
+      margin-bottom: 15px;
     }
+
     #modal-content button {
-      margin-top: 10px;
-      padding: 6px 12px;
+      background-color: #a64bf4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
       font-size: 16px;
+      border-radius: 6px;
       cursor: pointer;
+    }
+
+    #result {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 18px;
+      min-height: 24px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 600px) {
+      .cell {
+        font-size: 14px;
+        padding: 12px 0;
+      }
+      h1 {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <h2>Выберите ячейку</h2>
+
+  <h1>Выберите ячейку</h1>
   <div id="cell-container"></div>
 
-  <!-- Модальное окно -->
   <div id="modal">
     <div id="modal-content">
-      <h3>Введите бейдж</h3>
-      <input type="number" id="modal-badge" autocomplete="off" />
-      <div style="text-align: right;">
-        <button onclick="submitBadge()">OK</button>
-      </div>
+      <h3>Введите ваш ID</h3>
+      <input type="number" id="modal-id" placeholder="Например: 12345" />
+      <button onclick="submitId()">Подтвердить</button>
     </div>
   </div>
 
+  <div id="result"></div>
+
   <script>
-    const cellContainer = document.getElementById("cell-container");
     const totalCells = 100;
+    const cellContainer = document.getElementById("cell-container");
+    const result = document.getElementById("result");
+    const modal = document.getElementById("modal");
+    const modalInput = document.getElementById("modal-id");
     let selectedCell = null;
 
-    // Создание ячеек
     for (let i = 1; i <= totalCells; i++) {
       const btn = document.createElement("button");
-      btn.innerText = `Ячейка ${i}`;
       btn.className = "cell";
       btn.id = `cell-${i}`;
-
-      btn.onclick = async () => {
-        try {
-          const res = await fetch('/select-cell', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ cell: i })
-          });
-
-          if (res.ok) {
-            selectedCell = i;
-            openModal();
-			} else if (res.status === 409) {
-          selectedCell = i;
-          openModal();
-          alert`(🔴 Ячейка ${i} занята. Введите бейдж для возврата ТСД)`;
-			} else if (res.status === 423) {
-          alert`(🟠 Ячейка ${i} в ремонте. Взять нельзя.)`;
-          selectedCell = null;
-        } else {
-          alert("Ошибка при выборе ячейки");
-          selectedCell = null;
-        }
-        } catch (e) {
-          alert("Ошибка подключения к серверу");
-          selectedCell = null;
-        }
+      btn.innerText = `№ ${i}`;
+      btn.onclick = () => {
+        selectedCell = i;
+        openModal();
       };
-
       cellContainer.appendChild(btn);
     }
 
-    // Открыть модальное окно
     function openModal() {
-      const modal = document.getElementById("modal");
       modal.style.display = "flex";
-      const input = document.getElementById("modal-badge");
-      input.value = "";
-      input.focus();
+      modalInput.focus();
     }
 
-    // Закрыть модальное окно
     function closeModal() {
-      const modal = document.getElementById("modal");
       modal.style.display = "none";
+      modalInput.value = "";
       selectedCell = null;
     }
 
-    // Обработка Enter
-    document.getElementById("modal-badge").addEventListener("keydown", e => {
-      if (e.key === "Enter") submitBadge();
+    modal.addEventListener("click", e => {
+      if (e.target === modal) closeModal();
     });
 
-    // Отправка бейджа
-    async function submitBadge() {
-      const badge = document.getElementById("modal-badge").value.trim();
-      if (!badge || !selectedCell) {
-        alert("Введите бейдж и выберите ячейку");
+    modalInput.addEventListener("keydown", e => {
+      if (e.key === "Enter") submitId();
+    });
+
+    async function submitId() {
+      const id = modalInput.value.trim();
+      if (!id || !selectedCell) {
+        showResult('Введите ID и выберите ячейку', 'red');
         return;
       }
 
@@ -147,51 +186,55 @@
         const res = await fetch('/manual-badge', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ badge, cell: selectedCell })
+          body: JSON.stringify({ badge: id, cell: selectedCell })
         });
 
         if (res.ok) {
-          alert(`✅ Бейдж ${badge} обработан`);
+          showResult((`✅ Ячейка №${selectedCell} успешно выбрана`), 'lightgreen');
           closeModal();
         } else if (res.status === 403) {
-          alert("⛔️ Эта ячейка занята другим сотрудником");
+          showResult('⛔️ Эта ячейка занята другим ID', 'red');
         } else if (res.status === 409) {
           const data = await res.json();
-          alert(`⛔️ У вас уже есть ТСД в ячейке №${data.conflictCell}. Сначала верните его.`);
+          showResult((`⚠️ У вас уже есть ТСД в ячейке №${data.conflictCell}`), 'orange');
+        } else if (res.status === 423) {
+          showResult('⛔️ Ячейка недоступна (в ремонте или сломана)', 'orange');
         } else {
-          alert("⚠️ Неизвестная ошибка");
+          showResult('⚠️ Неизвестная ошибка', 'orange');
         }
-      } catch (err) {
-        alert("Ошибка подключения к серверу");
+      } catch {
+        showResult('⚠️ Ошибка подключения к серверу', 'orange');
       }
 
-      document.getElementById("modal-badge").value = "";
+      modalInput.value = "";
     }
 
-    // Обновление статуса каждые 1 сек
-    setInterval(async () => {
-  try {
-    const res = await fetch('/status');
-    const status = await res.json();
+    function showResult(message, color) {
+      result.style.color = color;
+      result.textContent = message;
+    }
 
-    for (let i = 1; i <= totalCells; i++) {
-      const btn = document.getElementById(`cell-${i}`);
-      if (!btn) continue;
+    async function updateStatus() {
+      try {
+        const res = await fetch('/status');
+        const status = await res.json();
 
-      if (status[i]?.inRepair) {
-        btn.classList.add("repair");
-        btn.classList.remove("busy");
-      } else if (status[i]?.busy) {
-        btn.classList.add("busy");
-        btn.classList.remove("repair");
-      } else {
-        btn.classList.remove("busy", "repair");
+        for (let i = 1; i <= totalCells; i++) {
+          const btn = document.getElementById(`cell-${i}`);
+          const s = status[i];
+          btn.classList.remove("busy", "repair", "broken");
+
+          if (s?.broken) btn.classList.add("broken");
+          else if (s?.inRepair) btn.classList.add("repair");
+          else if (s?.busy) btn.classList.add("busy");
+        }
+      } catch (e) {
+        console.error('Ошибка обновления статуса ячеек');
       }
     }
-  } catch (e) {
-    console.error("Ошибка при обновлении статуса:", e);
-  }
-}, 1000);
+
+    updateStatus();
+    setInterval(updateStatus, 1000);
   </script>
 </body>
 </html>

@@ -110,6 +110,7 @@
         const s = status[i];
         const row = document.createElement("tr");
 
+        // Установка классов цвета
         if (s.inRepair) {
           row.className = s.repairType === 'broken' ? "broken" : "repair";
         } else if (s.busy) {
@@ -119,10 +120,10 @@
         row.innerHTML = `
           <td>${i}</td>
           <td>${
-            s.inRepair 
-              ? (s.repairType === 'broken' ? "⚠️ Сломан" : "🔧 На ремонте")
-              : s.busy 
-                ? "🔴 Занята" 
+            s.inRepair
+              ? (s.repairType === 'broken' ? "⚠️ Сломана" : "🔧 На ремонте")
+              : s.busy
+                ? "🔴 Занята"
                 : "🟢 Свободна"
           }</td>
           <td>${s.badge || ""}</td>
@@ -131,7 +132,7 @@
             <button onclick="release(${i})">Вернуть</button>
             <button onclick="occupy(${i})">Занять</button>
             <button onclick="repair(${i})">Ремонт</button>
-            <button onclick="markBroken(${i})">Сломан</button>
+            <button onclick="markBroken(${i})">Сломана</button>
           </td>
         `;
         tbody.appendChild(row);
@@ -159,7 +160,7 @@
     }
 
     async function repair(cell) {
-      const badge = prompt("Введите свой ID (администратор):");
+      const badge = prompt("Введите ваш ID администратора:");
       if (!badge) return;
       await fetch('/admin/repair', {
         method: 'POST',
@@ -170,7 +171,7 @@
     }
 
     async function markBroken(cell) {
-      const badge = prompt("Введите свой ID (администратор):");
+      const badge = prompt("Введите ваш ID администратора:");
       if (!badge) return;
       await fetch('/admin/mark-broken', {
         method: 'POST',

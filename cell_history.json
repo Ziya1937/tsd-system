@@ -131,6 +131,209 @@
       "action": "released",
       "badge": "-",
       "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:35:13.302Z",
+      "action": "occupied",
+      "badge": "1",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:46:03.295Z",
+      "action": "occupied",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:50:15.816Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:16.581Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:20.293Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:20.685Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:20.886Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:21.043Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:21.193Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:21.343Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:21.508Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:21.830Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:21.995Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:22.146Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:55:43.940Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:55:44.299Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:55:44.487Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:55:44.667Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:55:44.847Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:55:45.004Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:55:46.063Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:01:00.867Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:10:57.292Z",
+      "action": "occupied",
+      "badge": "56565",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:10:58.070Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:10:58.602Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:10:58.775Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:10:58.933Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:10:59.090Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:03.299Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:03.666Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:03.816Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:04.454Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-07T16:36:31.326Z",
+      "action": "repaired",
+      "badge": "528987",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-07T16:39:03.366Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
     }
   ],
   "2": [
@@ -157,6 +360,54 @@
       "action": "repair_released",
       "badge": "-",
       "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:35:16.902Z",
+      "action": "occupied",
+      "badge": "1",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T10:11:04.112Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:04.814Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:05.061Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-07T16:12:58.762Z",
+      "action": "occupied",
+      "badge": "528987",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-07T16:12:59.703Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-07T16:13:07.618Z",
+      "action": "repaired",
+      "badge": "528987",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-07T16:13:10.811Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
     }
   ],
   "3": [
@@ -168,6 +419,48 @@
     },
     {
       "timestamp": "2025-07-06T08:35:51.199Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:35:54.152Z",
+      "action": "repaired",
+      "badge": "528987",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:17.714Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:22.881Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:55:46.813Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:57:49.415Z",
+      "action": "occupied",
+      "badge": "5995",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:57:54.869Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:05.579Z",
       "action": "repair_released",
       "badge": "-",
       "admin": true
@@ -184,6 +477,66 @@
       "timestamp": "2025-07-06T01:01:27.522Z",
       "action": "released",
       "badge": "528987",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:36:00.558Z",
+      "action": "broken",
+      "badge": "528987",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:18.299Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:23.218Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:55:47.120Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:57:55.265Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:08.964Z",
+      "action": "occupied",
+      "badge": "cd",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:09.944Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:10.236Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:10.394Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:10.551Z",
+      "action": "repair_released",
+      "badge": "-",
       "admin": true
     }
   ],
@@ -211,6 +564,12 @@
       "action": "released",
       "badge": "-",
       "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:45:34.307Z",
+      "action": "occupied",
+      "badge": "56",
+      "admin": false
     }
   ],
   "6": [
@@ -237,6 +596,12 @@
       "action": "released",
       "badge": "-",
       "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:45:37.285Z",
+      "action": "occupied",
+      "badge": "56",
+      "admin": false
     }
   ],
   "7": [],
@@ -244,9 +609,41 @@
   "9": [],
   "10": [],
   "11": [],
-  "12": [],
+  "12": [
+    {
+      "timestamp": "2025-07-07T16:38:19.207Z",
+      "action": "occupied",
+      "badge": "12",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T16:38:51.371Z",
+      "action": "released",
+      "badge": "12",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T17:06:33.794Z",
+      "action": "occupied",
+      "badge": "12",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T17:06:53.591Z",
+      "action": "released",
+      "badge": "12",
+      "admin": false
+    }
+  ],
   "13": [],
-  "14": [],
+  "14": [
+    {
+      "timestamp": "2025-07-06T10:11:46.473Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
   "15": [
     {
       "timestamp": "2025-07-06T01:07:13.717Z",
@@ -435,18 +832,203 @@
       "action": "released",
       "badge": "16",
       "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:34:55.369Z",
+      "action": "released",
+      "badge": "-",
+      "admin": true
     }
   ],
   "17": [],
   "18": [],
-  "19": [],
+  "19": [
+    {
+      "timestamp": "2025-07-06T10:12:06.561Z",
+      "action": "broken",
+      "badge": "5955",
+      "admin": true
+    }
+  ],
   "20": [],
   "21": [],
   "22": [],
-  "23": [],
-  "24": [],
-  "25": [],
-  "26": [],
+  "23": [
+    {
+      "timestamp": "2025-07-07T17:06:40.812Z",
+      "action": "occupied",
+      "badge": "25",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T17:06:48.929Z",
+      "action": "released",
+      "badge": "25",
+      "admin": false
+    }
+  ],
+  "24": [
+    {
+      "timestamp": "2025-07-06T10:05:52.074Z",
+      "action": "occupied",
+      "badge": "24",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T10:06:01.457Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:06:02.183Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:06:02.656Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:06:02.835Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:06:03.001Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:06:03.188Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:06:05.566Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:06:09.001Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:06:12.566Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:06:12.843Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:06:13.030Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:06:13.194Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "25": [
+    {
+      "timestamp": "2025-07-06T09:50:27.029Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:27.194Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:27.343Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:27.494Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:27.652Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:37.791Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:37.949Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:38.085Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:52.528Z",
+      "action": "occupied",
+      "badge": "5659",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:11:53.604Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T10:12:02.886Z",
+      "action": "broken",
+      "badge": "9595",
+      "admin": true
+    }
+  ],
+  "26": [
+    {
+      "timestamp": "2025-07-06T10:11:58.731Z",
+      "action": "broken",
+      "badge": "5695",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-07T16:12:53.806Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
   "27": [
     {
       "timestamp": "2025-07-06T09:22:57.080Z",
@@ -459,48 +1041,464 @@
       "action": "released",
       "badge": "27",
       "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:50:25.746Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:26.107Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:26.256Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:26.420Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:26.595Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:31.149Z",
+      "action": "occupied",
+      "badge": "565",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:31.792Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:32.145Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:34.727Z",
+      "action": "repaired",
+      "badge": "565",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:36.090Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:36.900Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:37.154Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:50:37.311Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:55:49.731Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-07T16:12:53.193Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
     }
   ],
-  "28": [],
-  "29": [],
+  "28": [
+    {
+      "timestamp": "2025-07-06T09:53:53.509Z",
+      "action": "occupied",
+      "badge": "28",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:55:49.453Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "29": [
+    {
+      "timestamp": "2025-07-06T09:54:09.057Z",
+      "action": "occupied",
+      "badge": "23",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:55:49.154Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
   "30": [],
   "31": [],
   "32": [],
-  "33": [],
+  "33": [
+    {
+      "timestamp": "2025-07-06T09:57:33.634Z",
+      "action": "occupied",
+      "badge": "959929",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T17:02:16.292Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
   "34": [],
   "35": [],
-  "36": [],
-  "37": [],
-  "38": [],
+  "36": [
+    {
+      "timestamp": "2025-07-06T09:38:58.544Z",
+      "action": "occupied",
+      "badge": "36",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T16:52:42.888Z",
+      "action": "occupied",
+      "badge": "565",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T17:02:16.818Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "37": [
+    {
+      "timestamp": "2025-07-06T09:39:02.091Z",
+      "action": "occupied",
+      "badge": "36",
+      "admin": false
+    }
+  ],
+  "38": [
+    {
+      "timestamp": "2025-07-07T16:28:25.661Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
   "39": [],
   "40": [],
   "41": [],
   "42": [],
   "43": [],
-  "44": [],
-  "45": [],
-  "46": [],
-  "47": [],
-  "48": [],
-  "49": [],
+  "44": [
+    {
+      "timestamp": "2025-07-07T16:52:17.463Z",
+      "action": "occupied",
+      "badge": "44",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T17:02:17.921Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "45": [
+    {
+      "timestamp": "2025-07-07T17:02:18.175Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "46": [
+    {
+      "timestamp": "2025-07-06T09:31:42.313Z",
+      "action": "occupied",
+      "badge": "5959",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:32:03.295Z",
+      "action": "repaired",
+      "badge": "528987",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:34:53.329Z",
+      "action": "released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "47": [
+    {
+      "timestamp": "2025-07-06T09:32:30.992Z",
+      "action": "occupied",
+      "badge": "47",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:32:35.124Z",
+      "action": "released",
+      "badge": "47",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:33:20.659Z",
+      "action": "occupied",
+      "badge": "47",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:34:52.609Z",
+      "action": "released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:34:52.819Z",
+      "action": "released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-07T16:28:26.807Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-07T17:07:19.455Z",
+      "action": "occupied",
+      "badge": "45",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T17:07:21.968Z",
+      "action": "released",
+      "badge": "45",
+      "admin": false
+    }
+  ],
+  "48": [
+    {
+      "timestamp": "2025-07-06T09:32:42.250Z",
+      "action": "occupied",
+      "badge": "48",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:34:51.132Z",
+      "action": "released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "49": [
+    {
+      "timestamp": "2025-07-06T09:31:23.833Z",
+      "action": "occupied",
+      "badge": "125",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:31:47.144Z",
+      "action": "released",
+      "badge": "125",
+      "admin": false
+    }
+  ],
   "50": [],
   "51": [],
   "52": [],
   "53": [],
-  "54": [],
-  "55": [],
-  "56": [],
-  "57": [],
-  "58": [],
-  "59": [],
-  "60": [],
+  "54": [
+    {
+      "timestamp": "2025-07-06T09:55:18.769Z",
+      "action": "occupied",
+      "badge": "89898",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T16:40:37.626Z",
+      "action": "occupied",
+      "badge": "54",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T16:49:14.954Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-07T17:02:19.239Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "55": [
+    {
+      "timestamp": "2025-07-06T09:55:07.015Z",
+      "action": "occupied",
+      "badge": "55",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T16:49:15.254Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "56": [
+    {
+      "timestamp": "2025-07-07T16:35:46.149Z",
+      "action": "occupied",
+      "badge": "56",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T16:35:58.968Z",
+      "action": "released",
+      "badge": "56",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T16:36:00.743Z",
+      "action": "occupied",
+      "badge": "56",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T16:36:21.331Z",
+      "action": "released",
+      "badge": "56",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T16:40:54.602Z",
+      "action": "occupied",
+      "badge": "595",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T16:49:15.614Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "57": [
+    {
+      "timestamp": "2025-07-06T09:34:26.462Z",
+      "action": "occupied",
+      "badge": "47",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:34:57.522Z",
+      "action": "released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-07T17:02:19.870Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "58": [
+    {
+      "timestamp": "2025-07-07T16:35:56.673Z",
+      "action": "occupied",
+      "badge": "58",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-07T16:36:23.302Z",
+      "action": "released",
+      "badge": "58",
+      "admin": false
+    }
+  ],
+  "59": [
+    {
+      "timestamp": "2025-07-06T09:33:36.118Z",
+      "action": "occupied",
+      "badge": "59",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:33:42.471Z",
+      "action": "released",
+      "badge": "59",
+      "admin": false
+    }
+  ],
+  "60": [
+    {
+      "timestamp": "2025-07-07T16:28:28.092Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
   "61": [],
   "62": [],
   "63": [],
   "64": [],
   "65": [],
   "66": [],
-  "67": [],
+  "67": [
+    {
+      "timestamp": "2025-07-06T09:34:31.037Z",
+      "action": "occupied",
+      "badge": "47",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:34:59.149Z",
+      "action": "released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
   "68": [],
   "69": [],
   "70": [],
@@ -508,10 +1506,68 @@
   "72": [],
   "73": [],
   "74": [],
-  "75": [],
-  "76": [],
-  "77": [],
-  "78": [],
+  "75": [
+    {
+      "timestamp": "2025-07-07T16:49:17.114Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "76": [
+    {
+      "timestamp": "2025-07-07T17:02:21.595Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "77": [
+    {
+      "timestamp": "2025-07-06T09:34:34.817Z",
+      "action": "occupied",
+      "badge": "47",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:35:00.200Z",
+      "action": "released",
+      "badge": "-",
+      "admin": true
+    },
+    {
+      "timestamp": "2025-07-06T09:42:18.492Z",
+      "action": "occupied",
+      "badge": "56",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:42:39.149Z",
+      "action": "released",
+      "badge": "56",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:42:43.176Z",
+      "action": "occupied",
+      "badge": "56",
+      "admin": false
+    }
+  ],
+  "78": [
+    {
+      "timestamp": "2025-07-06T09:42:24.484Z",
+      "action": "occupied",
+      "badge": "77",
+      "admin": false
+    },
+    {
+      "timestamp": "2025-07-06T09:42:27.089Z",
+      "action": "released",
+      "badge": "77",
+      "admin": false
+    }
+  ],
   "79": [],
   "80": [],
   "81": [],
@@ -526,12 +1582,47 @@
   "90": [],
   "91": [],
   "92": [],
-  "93": [],
+  "93": [
+    {
+      "timestamp": "2025-07-07T16:28:30.318Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
   "94": [],
   "95": [],
-  "96": [],
-  "97": [],
-  "98": [],
+  "96": [
+    {
+      "timestamp": "2025-07-07T16:28:30.895Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "97": [
+    {
+      "timestamp": "2025-07-07T16:28:31.339Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
+  "98": [
+    {
+      "timestamp": "2025-07-07T16:28:31.773Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ],
   "99": [],
-  "100": []
+  "100": [
+    {
+      "timestamp": "2025-07-07T16:28:32.923Z",
+      "action": "repair_released",
+      "badge": "-",
+      "admin": true
+    }
+  ]
 }
