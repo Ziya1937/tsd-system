@@ -3,57 +3,89 @@
 <head>
   <meta charset="UTF-8" />
   <title>Управление ТСД</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    :root {
+      --main-bg: #da31b9;
+      --text-light: #ffffff;
+      --btn-bg: #ffffff;
+      --btn-text: #da31b9;
+      --btn-hover: #f0d3ef;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f7f2fa;
       margin: 0;
       padding: 0;
-      text-align: center;
+      font-family: "Segoe UI", sans-serif;
+      background: var(--main-bg);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     header {
-      background-color: #9c27b0;
-      color: white;
-      padding: 20px 0;
-      font-size: 28px;
+      background: var(--main-bg);
+      color: var(--text-light);
+      padding: 30px 0;
+      text-align: center;
+      font-size: 30px;
       font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
     main {
-      padding: 40px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 20px;
+      gap: 40px;
     }
 
     .button {
-      display: inline-block;
-      margin: 20px;
-      padding: 20px 40px;
-      font-size: 20px;
-      border: none;
-      border-radius: 8px;
-      background-color: #ba68c8;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      text-decoration: none;
+      display: block;
+      width: 95%;
+      max-width: 500px;
+      padding: 40px 60px;
+      font-size: 28px;
       font-weight: bold;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border: none;
+      border-radius: 20px;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
     }
 
     .button:hover {
-      background-color: #ab47bc;
+      background: var(--btn-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 28px rgba(0, 0, 0, 0.35);
     }
 
     footer {
-      margin-top: 60px;
+      text-align: center;
+      padding: 20px;
       font-size: 14px;
-      color: #888;
+      color: #eee;
     }
 
     @media (max-width: 600px) {
       .button {
-        width: 80%;
-        font-size: 18px;
-        padding: 15px;
+        font-size: 24px;
+        padding: 30px;
       }
     }
   </style>
@@ -66,6 +98,6 @@
     <a href="/admin/login" class="button">Вход для администрации</a>
   </main>
 
-  <footer>© 2025 TSD System</footer>
+  <footer>©️ 2025 TSD System</footer>
 </body>
 </html>
