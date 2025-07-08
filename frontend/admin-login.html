@@ -7,16 +7,37 @@
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      margin-top: 50px;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url('https://static21.tgcnt.ru/posts/_0/1b/1bf2adb8c48a898c75ff3779ebe614ad.jpg') no-repeat center center;
+      background-size: cover;
     }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      width: 300px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
     input {
       font-size: 16px;
       padding: 10px;
-      margin: 10px;
-      width: 200px;
+      margin: 10px 0;
+      width: 190px;
       border-radius: 5px;
       border: 1px solid #ccc;
     }
+
     button {
       font-size: 16px;
       padding: 10px 20px;
@@ -25,22 +46,51 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      margin-top: 10px;
     }
+
     button:hover {
       background-color: #555;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+      min-height: 18px;
     }
   </style>
 </head>
 <body>
-  <h2>Вход в админку</h2>
-  <input type="number" id="badge" placeholder="Введите бейдж администратора" />
-  <button onclick="login()">Войти</button>
+  <div class="login-box">
+    <h2>Вход</h2>
+    <input
+      type="number"
+      id="badge"
+      placeholder="Введите ID старшего"
+      oninput="clearError()"
+      onkeydown="handleKey(event)"
+    />
+    <br />
+    <button onclick="login()">Войти</button>
+    <div id="error" class="error-message"></div>
+  </div>
 
   <script>
+    function clearError() {
+      document.getElementById("error").textContent = "";
+    }
+
+    function handleKey(e) {
+      if (e.key === 'Enter') login();
+    }
+
     function login() {
       const badge = document.getElementById("badge").value.trim();
+      const errorDiv = document.getElementById("error");
+
       if (!badge) {
-        alert("Введите бейдж");
+        errorDiv.textContent = "Введите бейдж";
         return;
       }
 
@@ -54,10 +104,12 @@
         if (data.success) {
           location.href = '/admin';
         } else {
-          alert(data.message);
+          errorDiv.textContent = "⛔ Неверный ID администратора";
         }
       })
-      .catch(err => alert("Ошибка подключения"));
+      .catch(() => {
+        errorDiv.textContent = "⚠️ Ошибка подключения к серверу";
+      });
     }
   </script>
 </body>

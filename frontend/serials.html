@@ -2,73 +2,289 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Серийные номера</title>
+  <title>Привязка ТСД</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-    label { display: block; margin-top: 15px; }
-    input { width: 100%; padding: 6px; margin-top: 5px; }
-    button { margin-top: 15px; padding: 10px; width: 100%; }
-    .result { margin-top: 20px; font-weight: bold; }
+    :root {
+      --accent: #da31b9;
+      --bg: #f9f7fb;
+      --white: #ffffff;
+      --gray: #888;
+      --border: #d4cfe3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://wallpaperbat.com/img/121313609-jasper-national-park-wallpaper-4k.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      position: relative;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      background: var(--accent);
+      color: white;
+      padding: 12px 16px;
+      position: relative;
+    }
+
+    .hamburger {
+      width: 28px; height: 22px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      position: absolute;
+      height: 3px;
+      background: white;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .hamburger div:nth-child(1) { top: 0; }
+    .hamburger div:nth-child(2) { top: 9px; }
+    .hamburger div:nth-child(3) { top: 18px; }
+
+    .topbar h1 {
+      flex: 1;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .nav-menu {
+      position: fixed;
+      left: -250px;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      background: var(--white);
+      box-shadow: 2px 0 6px rgba(0,0,0,0.2);
+      transition: left 0.3s;
+      z-index: 1000;
+      padding-top: 60px;
+    }
+
+    .nav-menu a {
+      display: block;
+      padding: 14px 20px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .nav-menu a.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .container {
+  max-width: 700px;
+  width: 80%;
+  background: rgba(128, 128, 128, 0.4); /* серый, 40% непрозрачности */
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 35px 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  z-index: 1;
+}
+
+    h2 {
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    input, select {
+      width: 95%;
+      padding: 14px;
+      margin-bottom: 20px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 15px;
+      background-color: #fcfbfd;
+    }
+
+    button {
+      padding: 14px;
+      width: 100%;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #c027a4;
+    }
+
+    .preview {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .preview img {
+      max-width: 180px;
+      max-height: 140px;
+      object-fit: contain;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #4caf50;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 2000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
   </style>
 </head>
-<body>
-  <h2>Привязка серийных номеров к ячейкам</h2>
+<body onclick="closeNav(event)">
+  <div class="topbar">
+    <div class="hamburger" onclick="toggleNav()">
+      <div></div><div></div><div></div>
+    </div>
+    <h1>Привязка ТСД</h1>
+  </div>
 
-  <label>Привязать:
-    <input type="number" id="cellInput" placeholder="Номер ячейки" />
-    <input type="text" id="serialInput" placeholder="Серийный номер ТСД" />
+  <nav class="nav-menu" id="nav-menu">
+    <a href="/admin">Управление ячейками</a>
+    <a href="/admin/history-page">Карточка ячейки</a>
+    <a href="/admin/serials" class="active">Привязка ТСД</a>
+  </nav>
+
+  <div class="container">
+
+    <label for="cellInput">Номер ячейки</label>
+    <input type="number" id="cellInput" placeholder="Введите номер ячейки" />
+
+    <label for="serialInput">Серийный номер</label>
+    <input type="text" id="serialInput" placeholder="Введите серийный номер ТСД" />
+
+    <label for="modelInput">Модель</label>
+    <select id="modelInput" onchange="updatePreview()">
+      <option value="">— Выберите модель —</option>
+      <option value="Ulefone Armor X8">Ulefone Armor X8</option>
+      <option value="Ulefone Armor 8">Ulefone Armor 8</option>
+      <option value="Urovo U2">Urovo U2</option>
+      <option value="Urovo RT40">Urovo RT40</option>
+      <option value="Zebra WT6300">Zebra WT6300</option>
+    </select>
+
+    <div class="preview" id="preview-block" style="display: none;">
+      <img id="modelImage" src="" alt="Фото ТСД" />
+    </div>
+
     <button onclick="bindSerial()">Привязать</button>
-  </label>
+  </div>
 
-  <label>Поиск по ячейке:
-    <input type="number" id="searchCell" placeholder="Номер ячейки" />
-    <button onclick="searchByCell()">Найти</button>
-  </label>
-
-  <label>Поиск по серийному номеру:
-    <input type="text" id="searchSerial" placeholder="Серийный номер" />
-    <button onclick="searchBySerial()">Найти</button>
-  </label>
-
-  <div id="result" class="result"></div>
+  <div class="toast" id="toast">Привязка успешно сохранена</div>
 
   <script>
+    const imgMap = {
+      "Ulefone Armor X8": "https://img.joomcdn.net/6b21ff0cb47bcebfbab158d0e97e108044656aa8_original.jpeg",
+      "Ulefone Armor 8": "https://avatars.mds.yandex.net/get-mpic/4252138/2a0000019233e47cf0f3607df0272733b0c5/orig",
+      "Urovo U2": "https://avatars.mds.yandex.net/get-mpic/13969676/2a000001965a96397635354f4f34a53275df/orig",
+      "Urovo RT40": "https://avatars.mds.yandex.net/get-mpic/4365206/2a000001905e7c5cbaef438cc1276a2860fd/orig",
+      "Zebra WT6300": "https://scanberry.ru/cache/products/30788/wt6300_front_facing_3x2_3600_0_600_600.webp"
+    };
+
+    function updatePreview() {
+      const model = document.getElementById("modelInput").value;
+      const img = imgMap[model];
+      const imgTag = document.getElementById("modelImage");
+      const preview = document.getElementById("preview-block");
+
+      if (img) {
+        imgTag.src = img;
+        preview.style.display = 'block';
+      } else {
+        preview.style.display = 'none';
+      }
+    }
+
     async function bindSerial() {
       const cell = document.getElementById("cellInput").value.trim();
       const serial = document.getElementById("serialInput").value.trim();
-      if (!cell || !serial) return alert("Заполните оба поля");
+      const model = document.getElementById("modelInput").value;
+      const imgUrl = imgMap[model] || "";
+
+      if (!cell || !serial || !model) {
+        return alert("Заполните все поля");
+      }
 
       const res = await fetch("/admin/bind-serial", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cell, serial })
+        credentials: "include",
+        body: JSON.stringify({ cell, serial, model, imgUrl })
       });
 
       if (res.ok) {
-        alert("Привязка успешно сохранена");
+        showToast();
+        document.getElementById("cellInput").value = '';
+        document.getElementById("serialInput").value = '';
+        document.getElementById("modelInput").value = '';
+        updatePreview();
       } else {
         alert("Ошибка при привязке");
       }
     }
 
-    async function searchByCell() {
-      const cell = document.getElementById("searchCell").value.trim();
-      if (!cell) return;
-
-      const res = await fetch(`/admin/serial-by-cell?cell=${cell}`);
-      const data = await res.json();
-      document.getElementById("result").innerText =
-        data.serial ? `Серийный номер: ${data.serial}` : "Серийный номер не найден";
+    function showToast() {
+      const toast = document.getElementById("toast");
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
     }
 
-    async function searchBySerial() {
-      const serial = document.getElementById("searchSerial").value.trim();
-      if (!serial) return;
+    function toggleNav() {
+      const nav = document.getElementById("nav-menu");
+      nav.style.left = nav.style.left === "0px" ? "-250px" : "0px";
+    }
 
-      const res = await fetch(`/admin/cell-by-serial?serial=${serial}`);
-      const data = await res.json();
-      document.getElementById("result").innerText =
-        data.cell ? `Номер ячейки: ${data.cell}` : "Ячейка не найдена";
+    function closeNav(event) {
+      const nav = document.getElementById("nav-menu");
+      if (!nav.contains(event.target) && event.target.closest('.hamburger') === null) {
+        nav.style.left = "-250px";
+      }
     }
   </script>
 </body>
