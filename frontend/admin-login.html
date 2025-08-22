@@ -1,116 +1,112 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Вход в админку</title>
+  <meta charset="UTF-8">
+  <title>Админ — Вход</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
       margin: 0;
+      padding: 0;
       height: 100vh;
+      background: url('warehouse-bg.jpg') no-repeat center center/cover;
       display: flex;
-      align-items: center;
       justify-content: center;
-      background: url('https://static21.tgcnt.ru/posts/_0/1b/1bf2adb8c48a898c75ff3779ebe614ad.jpg') no-repeat center center;
-      background-size: cover;
+      align-items: center;
+      font-family: Arial, sans-serif;
     }
-
-    .login-box {
-      background: rgba(255, 255, 255, 0.9);
+    .login-container {
+      background: rgba(0, 0, 0, 0.7);
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
       width: 300px;
+      color: #fff;
     }
-
-    h2 {
+    .login-container h2 {
       margin-bottom: 20px;
-      color: #333;
     }
-
-    input {
-      font-size: 16px;
+    .login-container input {
+      width: 100%;
       padding: 10px;
       margin: 10px 0;
-      width: 190px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      font-size: 16px;
-      padding: 10px 20px;
-      background-color: #333;
-      color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .login-container button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #28a745;
+      color: white;
+      font-size: 16px;
       cursor: pointer;
-      margin-top: 10px;
     }
-
-    button:hover {
-      background-color: #555;
+    .login-container button:disabled {
+      background: #555;
+      cursor: not-allowed;
     }
-
-    .error-message {
-      color: red;
+    .error {
+      color: #ff6666;
       margin-top: 10px;
-      font-size: 14px;
-      min-height: 18px;
     }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>Вход</h2>
-    <input
-      type="number"
-      id="badge"
-      placeholder="Введите ID старшего"
-      oninput="clearError()"
-      onkeydown="handleKey(event)"
-    />
-    <br />
-    <button onclick="login()">Войти</button>
-    <div id="error" class="error-message"></div>
+  <div class="login-container">
+    <h2>Вход в админку</h2>
+    <input type="password" id="badgeInput" placeholder="Введите ID администратора" />
+    <button id="loginBtn" disabled>Войти</button>
+    <p class="error" id="errorMsg"></p>
   </div>
 
   <script>
-    function clearError() {
-      document.getElementById("error").textContent = "";
+    const input = document.getElementById('badgeInput');
+    const button = document.getElementById('loginBtn');
+    const errorMsg = document.getElementById('errorMsg');
+
+    // Проверяем сохранённую сессию
+    if (localStorage.getItem("adminSession") === "true") {
+      window.location.href = "/admin";
     }
 
-    function handleKey(e) {
-      if (e.key === 'Enter') login();
-    }
+    // Активация кнопки только при вводе
+    input.addEventListener("input", () => {
+      button.disabled = input.value.trim() === "";
+    });
 
-    function login() {
-      const badge = document.getElementById("badge").value.trim();
-      const errorDiv = document.getElementById("error");
+    async function login() {
+      const badge = input.value.trim();
+      if (!badge) return;
 
-      if (!badge) {
-        errorDiv.textContent = "Введите бейдж";
-        return;
-      }
+      try {
+        const res = await fetch("/admin/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ badge })
+        });
 
-      fetch('/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ badge })
-      })
-      .then(res => res.json())
-      .then(data => {
+        const data = await res.json();
+
         if (data.success) {
-          location.href = '/admin';
+          localStorage.setItem("adminSession", "true");
+          window.location.href = "/admin";
         } else {
-          errorDiv.textContent = "⛔ Неверный ID администратора";
+          errorMsg.textContent = "⛔ Неверный ID администратора";
         }
-      })
-      .catch(() => {
-        errorDiv.textContent = "⚠️ Ошибка подключения к серверу";
-      });
+      } catch (err) {
+        errorMsg.textContent = "⚠️ Ошибка подключения к серверу";
+      }
     }
+
+    // Вход по клику
+    button.addEventListener("click", login);
+
+    // Вход по Enter
+    input.addEventListener("keypress", e => {
+      if (e.key === "Enter" && !button.disabled) login();
+    });
   </script>
 </body>
 </html>

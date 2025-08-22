@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Ячейки без движения</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --accent: #da31b9;
+      --bg: #f9f7fb;
+      --white: #ffffff;
+      --gray: #888;
+      --border: #d4cfe3;
+      --danger: #d00000;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", sans-serif; background: var(--bg); color: #333; min-height: 100vh; }
+
+    /* Верхняя панель */
+    .topbar {
+      display: flex;
+      align-items: center;
+      background: var(--accent);
+      color: white;
+      padding: 12px 16px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      z-index: 1001;
+    }
+    .hamburger {
+      width: 28px;
+      height: 22px;
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .hamburger span {
+      display: block;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+    }
+    .topbar h1 { flex: 1; text-align: center; font-size: 18px; }
+
+    /* Навигация */
+    #nav-menu {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      width: 220px;
+      background: var(--accent);
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      padding: 10px 0;
+      transform: translateX(-240px);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      height: calc(100% - 56px);
+      user-select: none;
+    }
+    #nav-menu.open { transform: translateX(0); }
+    #nav-menu ul { list-style: none; padding: 0; margin: 0; }
+    #nav-menu li {
+      padding: 12px 24px;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      border-left: 4px solid transparent;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+    #nav-menu li.active { background: #b22282; border-left-color: white; cursor: default; }
+    #nav-menu li:not(.active):hover { background: #c138a3; }
+
+    /* Фон для навигации */
+    #nav-backdrop {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 900;
+      display: none;
+    }
+    #nav-backdrop.open { display: block; }
+
+    /* Контент */
+    .content { padding: 80px 24px 24px; max-width: 960px; margin: auto; }
+    .filter { margin-bottom: 20px; display: flex; gap: 10px; align-items: center; }
+    .filter label { font-weight: bold; }
+    .filter select { padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); }
+
+    table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; }
+    th { background: var(--bg); }
+    tr.inactive { background-color: #ffd6d6; } /* подсветка ячеек без движения */
+  </style>
+</head>
+<body>
+  <!-- Верхняя панель -->
+  <div class="topbar" role="banner" aria-label="Ячейки без движения">
+    <div class="hamburger" id="burger" tabindex="0" role="button" aria-label="Открыть меню навигации" aria-expanded="false" aria-controls="nav-menu">
+      <span></span><span></span><span></span>
+    </div>
+    <h1>Ячейки без движения</h1>
+  </div>
+
+  <!-- Навигация -->
+  <nav id="nav-menu" role="navigation" aria-label="Главное меню">
+    <ul>
+      <li id="nav-admin">Управление ячейками</li>
+      <li id="nav-history">Карточка ячейки</li>
+      <li id="nav-serials">Привязка ТСД</li>
+      <li class="active" aria-current="page">Ячейки без движения</li>
+    </ul>
+  </nav>
+  <div id="nav-backdrop" tabindex="-1"></div>
+
+  <!-- Контент страницы -->
+  <div class="content">
+    <div class="filter">
+      <label for="sortSelect">Сортировать по:</label>
+      <select id="sortSelect" onchange="renderTable()">
+        <option value="idle">Время без движения (по убыванию)</option>
+        <option value="cell">Номер ячейки</option>
+      </select>
+    </div>
+
+    <table id="cellsTable">
+      <thead>
+        <tr>
+          <th>Ячейка</th>
+          <th>S/N</th>
+          <th>Модель</th>
+          <th>Последнее действие</th>
+          <th>Время последнего действия</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    let serials = {}, historyData = {};
+
+    // словарь переводов
+    const actionMap = {
+      take: "Взял",
+      return: "Вернул",
+      repair: "Ремонт",
+      moved: "Перемещено",
+      unknown: "Неизвестно"
+    };
+
+    async function fetchData() {
+      try {
+        const serialRes = await fetch('/admin/serials-data', { credentials: 'include' });
+        const historyRes = await fetch('/admin/history', { credentials: 'include' });
+        serials = await serialRes.json();
+        historyData = await historyRes.json();
+        renderTable();
+      } catch (err) {
+        console.error("Ошибка загрузки данных", err);
+        alert("Не удалось загрузить данные с сервера");
+      }
+    }
+
+    function renderTable() {
+      const tbody = document.querySelector("#cellsTable tbody");
+      tbody.innerHTML = "";
+      const sortBy = document.getElementById("sortSelect").value;
+      const now = new Date();
+
+      let data = [];
+      for(let i=1; i<=100; i++){
+        const cell = i.toString();
+        const s = serials[cell] || {};
+        const logs = historyData[cell] || [];
+        const lastLog = logs.length ? logs[logs.length-1] : {};
+        data.push({
+          cell,
+          serial: s.serial || '-',
+          model: s.model || '-',
+          lastAction: lastLog.action || '-',
+          lastTime: lastLog.timestamp || null
+        });
+      }
+
+      if(sortBy === "idle"){
+        data.sort((a,b)=>{
+          const ta = a.lastTime ? new Date(a.lastTime).getTime() : 0;
+          const tb = b.lastTime ? new Date(b.lastTime).getTime() : 0;
+          return ta - tb;
+        });
+      } else if(sortBy === "cell"){
+        data.sort((a,b)=> parseInt(a.cell) - parseInt(b.cell));
+      }
+
+      data.forEach(d=>{
+        const tr = document.createElement("tr");
+        const lastMove = d.lastTime ? new Date(d.lastTime) : null;
+        const idleTime = lastMove ? Math.floor((now - lastMove)/1000/60) : null;
+        if(!d.lastTime || idleTime > 60*24) tr.classList.add("inactive");
+
+        const actionRu = actionMap[d.lastAction] || d.lastAction;
+
+        tr.innerHTML = `
+          <td>${d.cell}</td>
+          <td>${d.serial}</td>
+          <td>${d.model}</td>
+          <td>${actionRu}</td>
+          <td>${d.lastTime ? new Date(d.lastTime).toLocaleString() : '-'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // навигация
+    const burger = document.getElementById('burger');
+    const navMenu = document.getElementById('nav-menu');
+    const navBackdrop = document.getElementById('nav-backdrop');
+    const navAdmin = document.getElementById('nav-admin');
+    const navHistory = document.getElementById('nav-history');
+    const navSerials = document.getElementById('nav-serials');
+
+    function toggleNav() {
+      const isOpen = navMenu.classList.contains('open');
+      if (isOpen) {
+        navMenu.classList.remove('open');
+        navBackdrop.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+      } else {
+        navMenu.classList.add('open');
+        navBackdrop.classList.add('open');
+        burger.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    burger.addEventListener('click', toggleNav);
+    burger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleNav();
+      }
+    });
+    navBackdrop.addEventListener('click', toggleNav);
+
+    navAdmin.addEventListener('click', () => { window.location.href = '/admin'; });
+    navHistory.addEventListener('click', () => { window.location.href = '/admin/history-page'; });
+    navSerials.addEventListener('click', () => { window.location.href = '/admin/serials'; });
+
+    fetchData();
+  </script>
+</body>
+</html>

@@ -1,393 +1,229 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Карточка ячейки</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    :root {
-      --accent: #da31b9;
-      --bg: #f9f7fb;
-      --white: #ffffff;
-      --gray: #888;
-      --border: #d4cfe3;
-      --danger: #d00000;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: #333;
-      min-height: 100vh;
-    }
+<meta charset="UTF-8">
+<title>Карточка ячейки</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --main-bg: #da31b9;
+  --btn-bg: #ffffff;
+  --btn-text: #da31b9;
+  --busy-color: #ff4b4b;
+  --repair-color: orange;
+  --broken-color: yellow;
+  --splash-bg: #da31b9;
+  --splash-text: #ffffff;
+  --modal-bg: white;
+  --modal-text: black;
+  --success-color: #4caf50;
+  --error-color: #f44336;
+  --warning-color: #ff9800;
+  --accent: #da31b9;
+  --bg: #f9f7fb;
+  --white: #ffffff;
+  --gray: #888;
+  --border: #d4cfe3;
+  --danger: #d00000;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Segoe UI", sans-serif; background: var(--bg); color: #333; min-height: 100vh; user-select: none; }
 
-    .topbar {
-      display: flex;
-      align-items: center;
-      background: var(--accent);
-      color: white;
-      padding: 12px 16px;
-      position: relative;
-    }
-    .hamburger {
-      width: 28px; height: 22px;
-      position: relative;
-      cursor: pointer;
-    }
-    .hamburger div {
-      position: absolute;
-      height: 3px;
-      background: white;
-      width: 100%;
-      transition: 0.3s;
-    }
-    .hamburger div:nth-child(1) { top: 0; }
-    .hamburger div:nth-child(2) { top: 9px; }
-    .hamburger div:nth-child(3) { top: 18px; }
+/* === Сплэшка и бургер из админ-панели === */
+.splash {
+  width: 100%;
+  background-color: var(--splash-bg);
+  color: var(--splash-text);
+  text-align: center;
+  padding: 15px 0;
+  font-weight: 700;
+  font-size: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#burger {
+  position: absolute;
+  left: 20px;
+  width: 28px;
+  height: 22px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  user-select: none;
+  z-index: 3100;
+}
+#burger span {
+  display: block;
+  height: 3px;
+  background: var(--splash-text);
+  border-radius: 2px;
+}
+h1 { margin-top: 70px; text-align: center; margin-bottom: 30px; font-size: 24px; color: var(--btn-text); }
 
-    .topbar h1 {
-      flex: 1;
-      text-align: center;
-      font-size: 18px;
-    }
+/* === Навигация из админ-панели === */
+#nav-menu {
+  position: fixed;
+  top: 55px;
+  left: 0;
+  width: 220px;
+  background: var(--main-bg);
+  box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+  padding: 10px 0;
+  transform: translateX(-240px);
+  transition: transform 0.3s ease;
+  z-index: 3500;
+  height: calc(100% - 55px);
+}
+#nav-menu.open { transform: translateX(0); }
+#nav-menu ul { list-style: none; padding: 0; margin: 0; }
+#nav-menu li { padding: 12px 24px; color: white; cursor: pointer; font-weight: 600; border-left: 4px solid transparent; transition: background-color 0.2s, border-color 0.2s; }
+#nav-menu li.active { background: #b22282; border-left-color: white; cursor: default; }
+#nav-menu li:not(.active):hover { background: #c138a3; }
+#nav-backdrop {
+  position: fixed;
+  top: 55px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 3400;
+  display: none;
+}
+#nav-backdrop.open { display: block; }
 
-    .nav-menu {
-      position: fixed;
-      left: -250px;
-      top: 0;
-      width: 250px;
-      height: 100%;
-      background: var(--white);
-      box-shadow: 2px 0 6px rgba(0,0,0,0.2);
-      transition: left 0.3s;
-      z-index: 1000;
-      padding-top: 60px;
-    }
+/* === Контент карточки === */
+.content { padding: 24px; max-width: 960px; margin: auto; margin-top: 100px; }
+#lookup-input { width: calc(100% - 130px); padding: 14px; font-size: 16px; border: 1.5px solid var(--border); border-radius: 8px; }
+#lookup-btn { width: 110px; margin-left: 10px; padding: 14px; font-size: 16px; border: none; border-radius: 8px; background: var(--accent); color: white; cursor: pointer; }
+.card { display: flex; width: 100%; background: var(--white); padding: 24px; border-radius: 14px; box-shadow: 0 3px 14px rgba(0,0,0,0.08); margin-top: 24px; }
+.card .info { flex: 1; padding-right: 20px; }
+.card .info div { margin-bottom: 12px; font-size: 16px; }
+.card .info strong { display: inline-block; width: 180px; color: #444; }
+.card img { width: 200px; height: auto; border-radius: 10px; }
+.actions { display: flex; justify-content: space-between; margin-top: 16px; padding: 0 24px; }
+.toggle-history, .clear-history { cursor: pointer; text-decoration: underline; font-size: 15px; }
+.clear-history { color: var(--danger); }
+.history-table { margin-top: 20px; border-collapse: collapse; width: 100%; background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.history-table th, .history-table td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; }
+.history-table th { background: var(--bg); }
 
-    .nav-menu a {
-      display: block;
-      padding: 12px 20px;
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .nav-menu a.active { background: var(--accent); color: white; }
-
-    .content {
-      padding: 24px;
-      max-width: 960px;
-      margin: auto;
-    }
-
-    #lookup-input {
-      width: calc(100% - 130px);
-      padding: 14px;
-      font-size: 16px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-    }
-
-    #lookup-btn {
-      width: 110px;
-      margin-left: 10px;
-      padding: 14px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      background: var(--accent);
-      color: white;
-      cursor: pointer;
-    }
-
-    .card {
-      display: flex;
-      width: 100%;
-      background: var(--white);
-      padding: 24px;
-      border-radius: 14px;
-      box-shadow: 0 3px 14px rgba(0,0,0,0.08);
-      margin-top: 24px;
-    }
-
-    .card .info {
-      flex: 1;
-      padding-right: 20px;
-    }
-
-    .card .info div {
-      margin-bottom: 12px;
-      font-size: 16px;
-    }
-
-    .card .info strong {
-      display: inline-block;
-      width: 180px;
-      color: #444;
-    }
-
-    .card img {
-      width: 200px;
-      height: auto;
-      border-radius: 10px;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 16px;
-      padding: 0 24px;
-    }
-
-    .toggle-history, .clear-history {
-      cursor: pointer;
-      color: var(--accent);
-      text-decoration: underline;
-      font-size: 15px;
-    }
-
-    .clear-history { color: var(--danger); }
-
-    .history-table {
-      margin-top: 20px;
-      border-collapse: collapse;
-      width: 100%;
-      background: var(--white);
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    .history-table th, .history-table td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
-    }
-
-    .history-table th {
-      background: var(--bg);
-    }
-
-    /* Popup & Notification */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-    }
-
-    .modal {
-      background: white;
-      padding: 24px 32px;
-      border-radius: 12px;
-      max-width: 90%;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }
-
-    .modal button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 15px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .modal .confirm {
-      background: var(--accent);
-      color: white;
-    }
-
-    .modal .cancel {
-      background: #ccc;
-      margin-left: 10px;
-    }
-
-    .notification {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--danger);
-      color: white;
-      padding: 12px 24px;
-      border-radius: 8px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-      display: none;
-      z-index: 3000;
-    }
-  </style>
+/* Popup & Notification */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 2000; }
+.modal { background: white; padding: 24px 32px; border-radius: 12px; max-width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+.modal button { margin-top: 20px; padding: 10px 20px; font-size: 15px; border: none; border-radius: 6px; cursor: pointer; }
+.modal .confirm { background: var(--accent); color: white; }
+.modal .cancel { background: #ccc; margin-left: 10px; }
+.notification { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--danger); color: white; padding: 12px 24px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.2); display: none; z-index: 3000; }
+</style>
 </head>
-<body onclick="closeNav(event)">
-  <div class="topbar">
-    <div class="hamburger" onclick="toggleNav()">
-      <div></div><div></div><div></div>
-    </div>
-    <h1>Карточка ячейки</h1>
+<body>
+<!-- === Сплэшка с бургером === -->
+<div class="splash" role="banner" aria-label="Карточка ячейки">
+  <div id="burger" tabindex="0" role="button" aria-label="Открыть меню навигации" aria-expanded="false" aria-controls="nav-menu">
+    <span></span><span></span><span></span>
   </div>
+  Карточка ячейки
+</div>
 
-  <nav class="nav-menu" id="nav-menu">
-  <a href="/admin">Управление ячейками</a>
-  <a href="/admin/history-page" class="active">Карточка ячейки</a>
-  <a href="/admin/serials">Привязка ТСД</a>
+<!-- === Навигация === -->
+<nav id="nav-menu" role="navigation" aria-label="Главное меню">
+  <ul>
+    <li><a href="/admin" style="color:white; text-decoration:none;">Управление ячейками</a></li>
+    <li class="active">Карточка ячейки</li>
+    <li id="nav-serials">Привязка ТСД</li>
+    <li><a style="color:white; text-decoration:none;" id="nav-idle" href="/cells-idle.html">Ячейки без движения</a></li>
+  </ul>
 </nav>
+<div id="nav-backdrop" tabindex="-1"></div>
 
-  <div class="content">
-    <div style="display: flex; align-items: center;">
-      <input id="lookup-input" placeholder="Введите номер ячейки или серийный номер">
-      <button id="lookup-btn" onclick="lookup()">Найти</button>
-    </div>
-    <div id="card-area"></div>
-    <div id="history-area"></div>
+<!-- === Контент карточки === -->
+<div class="content">
+  <div style="display: flex; align-items: center;">
+    <input id="lookup-input" placeholder="Введите номер ячейки или серийный номер">
+    <button id="lookup-btn" onclick="lookup()">Найти</button>
   </div>
+  <div id="card-area"></div>
+  <div id="history-area"></div>
+</div>
 
-  <div class="modal-overlay" id="confirm-modal">
-    <div class="modal">
-      <div>Вы уверены, что хотите очистить историю ячейки?</div>
-      <button class="confirm" onclick="confirmClear()">Да</button>
-      <button class="cancel" onclick="closeModal()">Отмена</button>
-    </div>
+<!-- === Модалки и уведомления === -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal">
+    <div>Вы уверены, что хотите очистить историю ячейки?</div>
+    <button class="confirm" onclick="confirmClear()">Да</button>
+    <button class="cancel" onclick="closeModal()">Отмена</button>
   </div>
+</div>
+<div class="notification" id="notification"></div>
 
-  <div class="notification" id="notification"></div>
+<script>
+let serials = {}, historyData = {}, currentCell = null, showHistory = false;
 
-  <script>
-    let serials = {}, historyData = {}, currentCell = null, showHistory = false;
+// === Навигация ===
+const burger = document.getElementById('burger');
+const navMenu = document.getElementById('nav-menu');
+const navBackdrop = document.getElementById('nav-backdrop');
+const navSerials = document.getElementById('nav-serials');
 
-    function toggleNav() {
-      const nav = document.getElementById("nav-menu");
-      nav.style.left = nav.style.left === "0px" ? "-250px" : "0px";
-    }
+function toggleNav() {
+  const isOpen = navMenu.classList.contains('open');
+  if(isOpen){
+    navMenu.classList.remove('open');
+    navBackdrop.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+  } else {
+    navMenu.classList.add('open');
+    navBackdrop.classList.add('open');
+    burger.setAttribute('aria-expanded', 'true');
+  }
+}
+burger.addEventListener('click', toggleNav);
+burger.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleNav(); } });
+navBackdrop.addEventListener('click', toggleNav);
+navSerials.addEventListener('click', () => { window.location.href = '/admin/serials'; });
 
-    function closeNav(event) {
-      const nav = document.getElementById("nav-menu");
-      if (!nav.contains(event.target) && event.target.closest('.hamburger') === null) {
-        nav.style.left = "-250px";
-      }
-    }
-
-    document.getElementById("lookup-input").addEventListener("keydown", function(e){
-      if (e.key === "Enter") lookup();
-    });
-
-    function showNotification(msg) {
-      const note = document.getElementById("notification");
-      note.textContent = msg;
-      note.style.display = "block";
-      setTimeout(() => note.style.display = "none", 3000);
-    }
-
-    function openModal() {
-      document.getElementById("confirm-modal").style.display = "flex";
-    }
-
-    function closeModal() {
-      document.getElementById("confirm-modal").style.display = "none";
-    }
-
-    async function confirmClear() {
-      closeModal();
-      try {
-        const res = `await fetch(/admin/clear-history/${currentCell}, {
-          method: 'DELETE',
-          credentials: 'include'
-        })`;
-        if (res.ok) {
-          await fetchHistoryData();
-          renderCard(currentCell);
-          showNotification("История очищена");
-        } else {
-          showNotification("Ошибка при очистке");
-        }
-      } catch (err) {
-        showNotification("Сетевая ошибка");
-      }
-    }
-
-    async function fetchSerials(){
-      const res = await fetch('/admin/serials-data', { credentials: 'include' });
-      serials = await res.json();
-    }
-
-    async function fetchHistoryData(){
-      const res = await fetch('/admin/history', { credentials: 'include' });
-      historyData = await res.json();
-    }
-
-    function translateAction(a){
-      return {
-        occupied: "Взял",
-        released: "Сдал",
-        repair: "Ремонт",
-        repair_released: "Снят с ремонта",
-        broken: "Сломан"
-      }[a] || a;
-    }
-
-    function renderCard(cell){
-      const s = serials[cell] || {};
-      const logs = historyData[cell] || [];
-      const last = logs.length ? logs[logs.length - 1] : null;
-      currentCell = cell;
-      showHistory = false;
-
-      document.getElementById("card-area").innerHTML = `
-        <div class="card">
-          <div class="info">
-            <div><strong>Ячейка:</strong> ${cell}</div>
-            <div><strong>S/N:</strong> ${s.serial || '-'}</div>
-            <div><strong>Модель:</strong> ${s.model || '-'}</div>
-            <div><strong>Статус:</strong> ${translateAction(last?.action)}</div>
-            <div><strong>Дата:</strong> ${last ? new Date(last.timestamp).toLocaleString() : '-'}</div>
-            <div><strong>ID сотрудника:</strong> ${last?.badge || '-'}</div>
-          </div>
-          <img src="${s.imgUrl || ''}" alt="" onerror="this.style.display='none'">
-        </div>
-        <div class="actions">
-          <span class="toggle-history" onclick="toggleHistory()">Показать историю ячейки</span>
-          <span class="clear-history" onclick="openModal()">Очистить историю ячейки</span>
-        </div>`;
-      document.getElementById("history-area").innerHTML = '';
-    }
-
-    function toggleHistory(){
-      if (!currentCell) return;
-      showHistory = !showHistory;
-      document.querySelector('.toggle-history').textContent = showHistory ? "Скрыть историю ячейки" : "Показать историю ячейки";
-      if (showHistory) renderHistory();
-      else document.getElementById("history-area").innerHTML = '';
-    }
-
-    function renderHistory(){
-      const logs = historyData[currentCell] || [];
-      const rows = logs.map(l => `
-        <tr>
-          <td>${new Date(l.timestamp).toLocaleString()}</td>
-          <td>${currentCell}</td>
-          <td>${translateAction(l.action)}</td>
-          <td>${l.badge}</td>
-        </tr>`).join('');
-      document.getElementById("history-area").innerHTML = `
-        <table class="history-table">
-          <thead><tr><th>Время</th><th>Ячейка</th><th>Статус</th><th>ID</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>`;
-    }
-
-    async function lookup(){
-      const v = document.getElementById("lookup-input").value.trim();
-      await fetchSerials();
-      await fetchHistoryData();
-      let cell = Object.keys(serials).find(c => c === v || serials[c].serial === v);
-      if (!cell) return showNotification("Ячейка или SN не найдены");
-      renderCard(cell);
-    }
-  </script>
+// === Карточка ячейки ===
+function showNotification(msg){ const note = document.getElementById("notification"); note.textContent=msg; note.style.display="block"; setTimeout(()=>note.style.display="none",3000);}
+function openModal(){document.getElementById("confirm-modal").style.display="flex";}
+function closeModal(){document.getElementById("confirm-modal").style.display="none";}
+async function confirmClear(){closeModal(); try{ const res = await fetch(`/admin/clear-history/${currentCell}`,{method:'DELETE',credentials:'include'}); if(res.ok){ await fetchHistoryData(); renderCard(currentCell); showNotification("История очищена"); } else showNotification("Ошибка при очистке");}catch{showNotification("Сетевая ошибка");}}
+async function fetchSerials(){ const res=await fetch('/admin/serials-data',{credentials:'include'}); serials=await res.json();}
+async function fetchHistoryData(){ const res=await fetch('/admin/history',{credentials:'include'}); historyData=await res.json();}
+function translateAction(a){ return {occupied:"Взял",released:"Сдал",repair:"Ремонт",repair_released:"Снят с ремонта",broken:"Сломан"}[a]||a;}
+function renderCard(cell){
+  const s=serials[cell]||{};
+  const logs=historyData[cell]||[];
+  const last=logs.length?logs[logs.length-1]:null;
+  currentCell=cell; showHistory=false;
+  document.getElementById("card-area").innerHTML=`
+  <div class="card">
+    <div class="info">
+      <div><strong>Ячейка:</strong> ${cell}</div>
+      <div><strong>S/N:</strong> ${s.serial||'-'}</div>
+      <div><strong>Модель:</strong> ${s.model||'-'}</div>
+      <div><strong>Статус:</strong> ${translateAction(last?.action)}</div>
+      <div><strong>Дата:</strong> ${last?new Date(last.timestamp).toLocaleString():'-'}</div>
+      <div><strong>ID сотрудника:</strong> ${last?.badge||'-'}</div>
+    </div>
+    <img src="${s.imgUrl||''}" alt="" onerror="this.style.display='none'">
+  </div>
+  <div class="actions">
+    <span class="toggle-history" onclick="toggleHistory()">Показать историю ячейки</span>
+    <span class="clear-history" onclick="openModal()">Очистить историю ячейки</span>
+  </div>`;
+  document.getElementById("history-area").innerHTML='';
+}
+function toggleHistory(){ if(!currentCell) return; showHistory=!showHistory; document.querySelector('.toggle-history').textContent=showHistory?"Скрыть историю ячейки":"Показать историю ячейки"; if(showHistory) renderHistory(); else document.getElementById("history-area").innerHTML=''; }
+function renderHistory(){ const logs=historyData[currentCell]||[]; const rows=logs.map(l=>`<tr><td>${new Date(l.timestamp).toLocaleString()}</td><td>${currentCell}</td><td>${translateAction(l.action)}</td><td>${l.badge}</td></tr>`).join(''); document.getElementById("history-area").innerHTML=`<table class="history-table"><thead><tr><th>Время</th><th>Ячейка</th><th>Статус</th><th>ID</th></tr></thead><tbody>${rows}</tbody></table>`; }
+async function lookup(){ const v=document.getElementById("lookup-input").value.trim(); await fetchSerials(); await fetchHistoryData(); let cell=Object.keys(serials).find(c=>c===v||serials[c].serial===v); if(!cell) return showNotification("Ячейка или SN не найдены"); renderCard(cell);}
+document.getElementById("lookup-input").addEventListener("keydown",e=>{if(e.key==="Enter") lookup();});
+</script>
 </body>
 </html>

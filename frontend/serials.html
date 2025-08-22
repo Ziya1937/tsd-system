@@ -11,6 +11,8 @@
       --white: #ffffff;
       --gray: #888;
       --border: #d4cfe3;
+      --splash-bg: #da31b9;
+      --splash-text: #ffffff;
     }
 
     * {
@@ -25,85 +27,103 @@
       background-size: cover;
       height: 100vh;
       position: relative;
+      user-select: none;
     }
 
-    .topbar {
+    /* === Сплэшка с бургером === */
+    .splash {
+      width: 100%;
+      background-color: var(--splash-bg);
+      color: var(--splash-text);
+      text-align: center;
+      padding: 15px 0;
+      font-weight: 700;
+      font-size: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 3000;
       display: flex;
       align-items: center;
-      background: var(--accent);
-      color: white;
-      padding: 12px 16px;
-      position: relative;
+      justify-content: center;
     }
 
-    .hamburger {
-      width: 28px; height: 22px;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .hamburger div {
+    #burger {
       position: absolute;
-      height: 3px;
-      background: white;
-      width: 100%;
-      transition: 0.3s;
+      left: 20px;
+      width: 28px;
+      height: 22px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
+      z-index: 3100;
     }
 
-    .hamburger div:nth-child(1) { top: 0; }
-    .hamburger div:nth-child(2) { top: 9px; }
-    .hamburger div:nth-child(3) { top: 18px; }
+    #burger span {
+      display: block;
+      height: 3px;
+      background: var(--splash-text);
+      border-radius: 2px;
+    }
 
-    .topbar h1 {
-      flex: 1;
-      text-align: center;
+    .splash h1 {
+      margin-left: 40px;
       font-size: 18px;
     }
 
-    .nav-menu {
+    /* === Навигация === */
+    #nav-menu {
       position: fixed;
-      left: -250px;
-      top: 0;
-      width: 250px;
-      height: 100%;
-      background: var(--white);
-      box-shadow: 2px 0 6px rgba(0,0,0,0.2);
-      transition: left 0.3s;
-      z-index: 1000;
-      padding-top: 60px;
-    }
-
-    .nav-menu a {
-      display: block;
-      padding: 14px 20px;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .nav-menu a.active {
+      top: 55px;
+      left: 0;
+      width: 220px;
       background: var(--accent);
-      color: white;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      padding: 10px 0;
+      transform: translateX(-240px);
+      transition: transform 0.3s ease;
+      z-index: 3500;
+      height: calc(100% - 55px);
     }
+
+    #nav-menu.open { transform: translateX(0); }
+
+    #nav-menu ul { list-style: none; padding: 0; margin: 0; }
+
+    #nav-menu li { padding: 12px 24px; color: white; cursor: pointer; font-weight: 600; border-left: 4px solid transparent; transition: background-color 0.2s, border-color 0.2s; }
+
+    #nav-menu li.active { background: #b22282; border-left-color: white; cursor: default; }
+
+    #nav-menu li:not(.active):hover { background: #c138a3; }
+
+    #nav-backdrop {
+      position: fixed;
+      top: 55px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 3400;
+      display: none;
+    }
+
+    #nav-backdrop.open { display: block; }
 
     .container {
-  max-width: 700px;
-  width: 80%;
-  background: rgba(128, 128, 128, 0.4); /* серый, 40% непрозрачности */
-  position: absolute;
-  top: 58%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 35px 30px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  z-index: 1;
-}
-
-    h2 {
-      color: var(--accent);
-      text-align: center;
-      margin-bottom: 30px;
+      max-width: 700px;
+      width: 80%;
+      background: rgba(128, 128, 128, 0.4);
+      position: absolute;
+      top: 58%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 35px 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      z-index: 1;
     }
 
     label {
@@ -136,9 +156,7 @@
       transition: background-color 0.2s ease;
     }
 
-    button:hover {
-      background-color: #c027a4;
-    }
+    button:hover { background-color: #c027a4; }
 
     .preview {
       text-align: center;
@@ -170,27 +188,30 @@
       transition: opacity 0.3s ease;
     }
 
-    .toast.show {
-      opacity: 1;
-    }
+    .toast.show { opacity: 1; }
   </style>
 </head>
 <body onclick="closeNav(event)">
-  <div class="topbar">
-    <div class="hamburger" onclick="toggleNav()">
-      <div></div><div></div><div></div>
+  <!-- === Сплэшка с бургером === -->
+  <div class="splash" role="banner" aria-label="Привязка ТСД">
+    <div id="burger" tabindex="0" role="button" aria-label="Открыть меню навигации" aria-expanded="false" aria-controls="nav-menu">
+      <span></span><span></span><span></span>
     </div>
     <h1>Привязка ТСД</h1>
   </div>
 
-  <nav class="nav-menu" id="nav-menu">
-    <a href="/admin">Управление ячейками</a>
-    <a href="/admin/history-page">Карточка ячейки</a>
-    <a href="/admin/serials" class="active">Привязка ТСД</a>
+  <!-- === Навигация === -->
+  <nav id="nav-menu" role="navigation" aria-label="Главное меню">
+    <ul>
+      <li><a href="/admin" style="color:white; text-decoration:none;">Управление ячейками</a></li>
+      <li><a href="/admin/history-page" style="color:white; text-decoration:none;">Карточка ячейки</a></li>
+      <li class="active">Привязка ТСД</li>
+      <li><a style="color:white; text-decoration:none;" href="/cells-idle.html">Ячейки без движения</a></li>
+    </ul>
   </nav>
+  <div id="nav-backdrop" tabindex="-1"></div>
 
   <div class="container">
-
     <label for="cellInput">Номер ячейки</label>
     <input type="number" id="cellInput" placeholder="Введите номер ячейки" />
 
@@ -270,20 +291,36 @@
     function showToast() {
       const toast = document.getElementById("toast");
       toast.classList.add("show");
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 3000);
+      setTimeout(() => toast.classList.remove("show"), 3000);
     }
+
+    // === Навигация ===
+    const burger = document.getElementById('burger');
+    const navMenu = document.getElementById('nav-menu');
+    const navBackdrop = document.getElementById('nav-backdrop');
 
     function toggleNav() {
-      const nav = document.getElementById("nav-menu");
-      nav.style.left = nav.style.left === "0px" ? "-250px" : "0px";
+      const isOpen = navMenu.classList.contains('open');
+      if(isOpen){
+        navMenu.classList.remove('open');
+        navBackdrop.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+      } else {
+        navMenu.classList.add('open');
+        navBackdrop.classList.add('open');
+        burger.setAttribute('aria-expanded', 'true');
+      }
     }
 
+    burger.addEventListener('click', toggleNav);
+    burger.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleNav(); } });
+    navBackdrop.addEventListener('click', toggleNav);
+
     function closeNav(event) {
-      const nav = document.getElementById("nav-menu");
-      if (!nav.contains(event.target) && event.target.closest('.hamburger') === null) {
-        nav.style.left = "-250px";
+      if (!navMenu.contains(event.target) && event.target.closest('#burger') === null) {
+        navMenu.classList.remove('open');
+        navBackdrop.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
       }
     }
   </script>

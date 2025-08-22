@@ -1,8 +1,8 @@
 {
   "1": {
-    "serial": "123456456",
-    "model": "Urovo RT40",
-    "imgUrl": "https://avatars.mds.yandex.net/get-mpic/4365206/2a000001905e7c5cbaef438cc1276a2860fd/orig"
+    "serial": "123456",
+    "model": "Ulefone Armor X8",
+    "imgUrl": "https://img.joomcdn.net/6b21ff0cb47bcebfbab158d0e97e108044656aa8_original.jpeg"
   },
   "2": {
     "serial": "222222",
@@ -11,6 +11,11 @@
   },
   "3": {
     "serial": "333333",
+    "model": "Urovo U2",
+    "imgUrl": "https://avatars.mds.yandex.net/get-mpic/13969676/2a000001965a96397635354f4f34a53275df/orig"
+  },
+  "4": {
+    "serial": "444444",
     "model": "Urovo U2",
     "imgUrl": "https://avatars.mds.yandex.net/get-mpic/13969676/2a000001965a96397635354f4f34a53275df/orig"
   },
@@ -30,9 +35,9 @@
     "imgUrl": "https://img.joomcdn.net/6b21ff0cb47bcebfbab158d0e97e108044656aa8_original.jpeg"
   },
   "25": {
-    "serial": "252525",
-    "model": "Urovo U2",
-    "imgUrl": "https://avatars.mds.yandex.net/get-mpic/13969676/2a000001965a96397635354f4f34a53275df/orig"
+    "serial": "123456",
+    "model": "Ulefone Armor X8",
+    "imgUrl": "https://img.joomcdn.net/6b21ff0cb47bcebfbab158d0e97e108044656aa8_original.jpeg"
   },
   "47": {
     "serial": "456456",
@@ -43,6 +48,11 @@
     "serial": "56",
     "model": "Ulefone Armor X8",
     "imgUrl": "https://img.joomcdn.net/6b21ff0cb47bcebfbab158d0e97e108044656aa8_original.jpeg"
+  },
+  "70": {
+    "serial": "707070",
+    "model": "Urovo U2",
+    "imgUrl": "https://avatars.mds.yandex.net/get-mpic/13969676/2a000001965a96397635354f4f34a53275df/orig"
   },
   "98": {
     "serial": "989898",

@@ -302,6 +302,7 @@
       <li class="active" aria-current="page">Управление ячейками</li>
       <li id="nav-history">Карточка ячейки</li>
       <li id="nav-serials">Привязка ТСД</li>
+	  <li><a style="color:white; text-decoration: none;" id="nav-idle" href="/cells-idle.html">Ячейки без движения </a></li>
     </ul>
   </nav>
   <div id="nav-backdrop" tabindex="-1"></div>
@@ -558,25 +559,35 @@
       navBackdrop.classList.add('open');
       burger.setAttribute('aria-expanded', 'true');
     }
-  }
+}
 
-  burger.addEventListener('click', toggleNav);
-  burger.addEventListener('keydown', (e) => {
+burger.addEventListener('click', toggleNav);
+burger.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleNav();
+        e.preventDefault();
+        toggleNav();
     }
-  });
+});
 
-  navBackdrop.addEventListener('click', toggleNav);
+navBackdrop.addEventListener('click', toggleNav);
 
-  navHistory.addEventListener('click', () => {
+navHistory.addEventListener('click', () => {
     window.location.href = '/admin/history-page';
-  });
+});
 
-  navSerials.addEventListener('click', () => {
+navSerials.addEventListener('click', () => {
     window.location.href = '/admin/serials';
-  });
+});
+
+// Добавляем обработчик для "Ячейки без движения"
+const navIdle = document.getElementById('nav-idle');
+navIdle.addEventListener('click', () => {
+    window.location.href = '/admin/cells-idle';
+});
+
+  
+  
+  
 
   // Инициализация
   fetchStatus();
